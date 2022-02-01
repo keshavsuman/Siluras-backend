@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const healthServicesSchema = mongoose.Schema({
+const healthConcernSchema = mongoose.Schema({
     name:{
         type:String
     },
@@ -12,4 +12,4 @@ const healthServicesSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('healthServices',healthServicesSchema);
+module.exports = mongoose.model('healthConcern',healthConcernSchema);

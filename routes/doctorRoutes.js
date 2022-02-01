@@ -1,7 +1,7 @@
 const express = require('express');
 const doctorRouter = express.Router();
-const authRoutes = require('./userRoutes/auhtRoutes');
-const appointmentRoutes = require('./userRoutes/auhtRoutes');
+const authRoutes = require('./userRoutes/authRoutes');
+const appointmentRoutes = require('./userRoutes/authRoutes');
 const userController = require('../controllers/userControllers/userController');
 
 doctorRouter.use('/auth',authRoutes);
