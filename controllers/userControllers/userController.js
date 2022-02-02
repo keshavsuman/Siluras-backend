@@ -29,13 +29,14 @@ module.exports.getVisits = async (req,res) =>{
 }
 module.exports.getUser = async (req,res) =>{
     try{
-        const user = await patientModel.findById(req.user._id);
+        console.log(req.user);
+        const user = await patientModel.findById(req.user._id,{password:0,__v:0});
         const visits = await visitModel.find({patientId:req.user._id}).populate('doctorId');
         const prescriptions = await prescriptionModel.find({patientId:req.user._id});
         const tests = await testsModel.find({patientId:req.user._id});
         console.log(user);
         const data = {
-            ...user,
+            ...user.toObject(),
             visits:visits,
             tests:tests,
             prescriptions:prescriptions,

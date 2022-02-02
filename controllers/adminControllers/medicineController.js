@@ -25,7 +25,8 @@ module.exports.addMedicines = async (req,res)=>{
             description:req.body.description,
             quantity:req.body.quantity,
             price:req.body.price,
-            inStock:req.body.inStock
+            inStock:req.body.inStock,
+            image_url:req.body.image_url,
         });
         res.status(200).json({
             status:200,

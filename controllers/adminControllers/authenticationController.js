@@ -71,6 +71,7 @@ module.exports.signup = async (req,res)=>{
                 last_name:lastName
             });
             await newAdmin.save();
+            
             res.status(200).json({
                 status:200,
                 message:"Admin signup Successful",

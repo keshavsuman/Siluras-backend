@@ -2,6 +2,7 @@ const doctorModel = require('../../models/doctorModel');
 const patientModel = require('../../models/patientModel');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const cartModel = require('../../models/cartModel');
 
 module.exports.login = async (req,res)=>{
     try {
@@ -69,6 +70,11 @@ module.exports.signup = async (req,res)=>{
                 last_name:lastName
             });
             await newPatient.save();
+            await cartModel.create({
+                patientId:newPatient._id,
+                products:[],
+                totalPrice:0
+            })
             res.status(200).json({
                 status:200,
                 message:"Signup Successful",

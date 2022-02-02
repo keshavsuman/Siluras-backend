@@ -16,6 +16,9 @@ const medicineSchema = mongoose.Schema({
         amount:{type:Number},
         discountedPrice:{type:Number}
     },
+    image_url:{
+        type:String
+    },
     inStock:{
         type:Number
     },
