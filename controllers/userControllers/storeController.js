@@ -59,10 +59,16 @@ module.exports.getMedicines = async (req,res) => {
 
 module.exports.addToCart = async (req,res) => {
     try {
-        console.log(req.body);
+        console.log({
+            medicineId:req.body.id,
+            quantity:req.body.quantity,
+        });
         const cart = await cartModel.findOneAndUpdate({patientId:req.user._id},{
             $push:{
-                products:req.body
+                products:{
+                    medicineId:req.body.id,
+                    quantity:req.body.quantity,
+                }
             }
         });
 
@@ -106,7 +112,7 @@ module.exports.removeFromCart = async (req,res) => {
 
 module.exports.getCart = async (req,res)=>{
     try {
-        const cart = await cartModel.findOne({patientId:req.user._id});
+        const cart = await cartModel.findOne({patientId:req.user._id}).populate('products.medicineId');
         res.status(200).json({
             status:200,
             message:"Cart fetched successfully",

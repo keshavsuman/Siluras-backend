@@ -72,3 +72,78 @@ module.exports.deleteAdvertisement = async (req,res) => {
         })
     }
 }
+
+module.exports.getCategories = async (req,res) => {
+    try {
+        const {select,project,skip,limit} = req.body;
+        const categories = await categoryModel.find(select,project).skip(skip).limit(limit);
+        res.status(200).json({
+            status:200,
+            message:"Categories fetched successfully",
+            data:categories,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.createCategory = async (req,res) => {
+    try {
+        const category = await categoryModel.create({
+            categoryName:req.body.categoryName,
+            image_url:req.body.image_url,
+        });
+        res.status(201).json({
+            status:201,
+            message:"Category created successfully",
+            data:category,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        })
+    }
+}
+
+module.exports.updateCategory = async (req,res) => {
+    try {
+        const category = await categoryModel.findByIdAndUpdate(req.params.id,{
+            categoryName:req.body.categoryName,
+            image_url:req.body.image_url,
+        });
+        res.status(200).json({
+            status:200,
+            message:"Category updated successfully",
+            data:category,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        })
+    }
+}
+
+module.exports.deleteCategory = async (req,res) => {
+    try {
+        const category = await categoryModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            status:200,
+            message:"Category deleted successfully",
+            data:category,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        })
+    }
+}

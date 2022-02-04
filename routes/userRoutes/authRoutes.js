@@ -4,6 +4,8 @@ const authController = require('../../controllers/userControllers/authentication
 
 userRouter.post('/login',authController.login);
 userRouter.post('/signup',authController.signup);
-
+userRouter.post('/isUserExitWithMobileNumber',authController.isUserExitWithMobileNumber);
+userRouter.post('/userLoginUsingOTP',authController.userLoginUsingOTP);
+userRouter.post('/userSignupUsingOTP',authController.userSignupUsingOTP);
 
 module.exports = userRouter;

@@ -7,4 +7,9 @@ storeRoutes.post('/createAdvertisement',storeController.createAdvertisement);
 storeRoutes.post('/updateAdvertisement/:id',storeController.updateAdvertisement);
 storeRoutes.delete('/deleteAdvertisement/:id',storeController.deleteAdvertisement);
 
+storeRoutes.post('/getCategories',storeController.getCategories);
+storeRoutes.post('/createCategory',storeController.createCategory);
+storeRoutes.post('/updateCategory/:id',storeController.updateCategory);
+storeRoutes.delete('/deleteCategory/:id',storeController.deleteAdvertisement);
+
 module.exports = storeRoutes;

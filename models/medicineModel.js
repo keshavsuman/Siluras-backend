@@ -7,6 +7,10 @@ const medicineSchema = mongoose.Schema({
     description:{
         type:String
     },
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'storeCategory'
+    },
     quantity:{
         amount:{type:Number},
         type:{type:String}
