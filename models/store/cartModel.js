@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const orderMedicineSchema = new mongoose.Schema({
     medicineId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'medicine'
+        ref:'medicine',
+        unique:true,
     },
     quantity:{
-        type:Number
+        type:Number,
+        required:false
     }
 },{_id:false});
 

@@ -2,7 +2,7 @@ const doctorModel = require('../../models/doctorModel');
 const patientModel = require('../../models/patientModel');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const cartModel = require('../../models/cartModel');
+const cartModel = require('../../models/store/cartModel');
 
 module.exports.login = async (req,res)=>{
     try {

@@ -1,15 +1,13 @@
 const express = require('express');
 const doctorRouter = express.Router();
 const authRoutes = require('./userRoutes/authRoutes');
-const appointmentRoutes = require('./userRoutes/authRoutes');
-const userController = require('../controllers/userControllers/userController');
+const doctorController = require('../controllers/doctorControllers/doctorController');
+const jsonwebtoken = require('jsonwebtoken');
 
 doctorRouter.use('/auth',authRoutes);
 doctorRouter.use(doctorAuth);
-// userRouter.use('/appoitment',appointmentRoutes);
-// userRouter.get('/notifications',userController.getNotifications);
-// userRouter.get('/visits',userController.getVisits);
-// userRouter.get('/',userController.getUser);
+doctorRouter.get('/notifications',doctorController.getNotifications);
+doctorRouter.get('/',doctorController.getDoctor);
 
 
 function doctorAuth(req,res,next){

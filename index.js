@@ -6,7 +6,7 @@ const routes = require('./routes/index');
 
 app.use(cors());
 app.use(express.json());
-mongoose.connect('mongodb://localhost:27017/doctor', { useNewUrlParser: true },()=>{
+mongoose.connect('mongodb://admin:siluras_7272@siluras.com:27017/doctor', { useNewUrlParser: true },()=>{
     console.log("Database connected");
 });
 

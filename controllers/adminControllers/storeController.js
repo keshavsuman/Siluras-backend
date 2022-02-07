@@ -1,5 +1,6 @@
 const advertisementModel = require('../../models/advertisementModel'); 
-const categoryModel = require('../../models/storeCategoryModel'); 
+const categoryModel = require('../../models/store/categoryModel'); 
+const subCategoryModel = require('../../models/store/subCategoryModel');
 
 module.exports.getAdvertisements = async (req,res) => {
     try {
@@ -134,6 +135,8 @@ module.exports.updateCategory = async (req,res) => {
 module.exports.deleteCategory = async (req,res) => {
     try {
         const category = await categoryModel.findByIdAndDelete(req.params.id);
+        const subCategory = await subCategoryModel.deleteMany({categoryId:req.params.id});
+
         res.status(200).json({
             status:200,
             message:"Category deleted successfully",
@@ -145,5 +148,80 @@ module.exports.deleteCategory = async (req,res) => {
             status:500,
             message:error.message,
         })
+    }
+}
+
+module.exports.getSubCategory = async (req,res) => {
+    try {
+        const subCategory = await subCategoryModel.find({categoryId:req.params.id});
+        res.status(200).json({
+            status:200,
+            message:"SubCategory fetched successfully",
+            data:subCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+module.exports.createSubCategroy = async (req,res) => {
+    try {
+        const subCategory = await subCategoryModel.create({
+            categoryId:req.body.categoryId,
+            subCategoryName:req.body.subCategoryName,
+            image_url:req.body.image_url,
+        });
+        res.status(201).json({
+            status:201,
+            message:"SubCategory created successfully",
+            data:subCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.updateSubCategory = async (req,res) => {
+    try {
+        const subCategory = await subCategoryModel.findOneAndUpdate({_id:req.body._id},{
+            categoryId:req.body.categoryId,
+            subCategoryName:req.body.subCategoryName,
+            image_url:req.body.image_url,
+        });
+        res.status(201).json({
+            status:201,
+            message:"SubCategory updated successfully",
+            data:subCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.deleteSubCategory = async (req,res) => {
+    try {
+        const subCategory = await subCategoryModel.findOneAndDelete({_id:req.body._id});
+        res.status(200).json({
+            status:200,
+            message:"SubCategory deleted successfully",
+            data:subCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
     }
 }

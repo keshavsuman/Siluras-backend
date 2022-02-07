@@ -5,8 +5,8 @@ const appointmentRoutes = express.Router();
 
 appointmentRoutes.get('/appointments',appointmentController.getAppointments);
 appointmentRoutes.get('/appointmentBookings',appointmentController.getAppointments);
-appointmentRoutes.post('/bookAppointment/:id',appointmentController.getAppointments);
+appointmentRoutes.post('/bookAppointment',appointmentController.bookAppointment);
 appointmentRoutes.post('/getHealthConcerns',appointmentController.getHealthConcerns);
-appointmentRoutes.post('/createHealthConcern',appointmentController.createHealthConcern);
+appointmentRoutes.post('/getDoctors',appointmentController.getDoctors);
 
 module.exports = appointmentRoutes;

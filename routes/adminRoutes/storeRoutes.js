@@ -10,6 +10,11 @@ storeRoutes.delete('/deleteAdvertisement/:id',storeController.deleteAdvertisemen
 storeRoutes.post('/getCategories',storeController.getCategories);
 storeRoutes.post('/createCategory',storeController.createCategory);
 storeRoutes.post('/updateCategory/:id',storeController.updateCategory);
-storeRoutes.delete('/deleteCategory/:id',storeController.deleteAdvertisement);
+storeRoutes.delete('/deleteCategory/:id',storeController.deleteCategory);
+
+storeRoutes.post('/getSubCategories::id',storeController.getSubCategory);
+storeRoutes.post('/createSubCategory',storeController.createSubCategroy);
+storeRoutes.post('/updateSubCategory/:id',storeController.updateSubCategory);
+storeRoutes.delete('/deleteSubCategory/:id',storeController.deleteSubCategory);
 
 module.exports = storeRoutes;

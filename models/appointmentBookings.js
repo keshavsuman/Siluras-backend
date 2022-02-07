@@ -12,8 +12,8 @@ const appointmentBookingSchema = mongoose.Schema({
         startTime:{type:String},
         endTime:{type:String}
     },
-    patienId:{
-        type:String,
+    patientId:{
+        type:mongoose.Schema.Types.ObjectId,
         ref:'patient'
     },
     doctorId:{

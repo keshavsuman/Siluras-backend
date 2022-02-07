@@ -1,11 +1,14 @@
-const appointmentModel = require('../../models/appointmentModel');
 const healthConcernModel = require('../../models/healthConcernModel');
 const appointmentBookingModel = require('../../models/appointmentBookings');
+const doctorModel = require('../../models/doctorModel');
 
 module.exports.getAppointments = async (req,res)=>{
     try {
         const {select,project,limit,skip} = req.body;
-        const appointments = appointmentModel.find(select,project).limit(limit??20).skip(skip??0);
+        const appointments = await appointmentBookingModel.find({
+            ...select,
+            patientId:req.user._id
+        },project).limit(limit??20).skip(skip??0);
         res.status(200).json({
             status:200,
             message:'Appointments fetched Successfully',
@@ -20,29 +23,17 @@ module.exports.getAppointments = async (req,res)=>{
     }
 }
 
-module.exports.getAppointmentBookings = async (req,res)=>{
-    try {
-        const {select,project,limit,skip} = req.body;
-        const appointments = appointmentModel.find({patientId:req.user._id,...select},project).limit(limit??20).skip(skip??0);
-        res.status(200).json({
-            status:200,
-            message:'Appointments fetched Successfully',
-            data:appointments
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            status:500,
-            message:error.message
-        });
-    }
-}
 module.exports.bookAppointment = async (req,res)=>{
     try {
-        const appointment = appointmentBookingModel.create({
+        const appointment = await appointmentBookingModel.create({
             patientId:req.user._id,
             date:req.body.date,
-            timeSlot:req.body.timeSlot,
+            timeSlot:{
+                startTime:req.body.startTime,
+                endTime:req.body.endTime,
+            },
+            healthConcern:req.body.healthConcern,
+            doctorId:req.body.doctorId,
         });
         res.status(200).json({
             status:200,
@@ -76,18 +67,15 @@ module.exports.getHealthConcerns = async (req,res)=>{
     }
 }
 
-module.exports.createHealthConcern = async (req,res)=>{
-    try{
-        const concerns = await healthConcernModel.create({
-            name:req.body.name,
-            imagePath:req.body.imagePath,
-        });
+module.exports.getDoctors = async (req,res)=>{
+    try {
+        const doctors = await doctorModel.find();
         res.status(200).json({
             status:200,
-            message:'Health Service fetched Successfully',
-            data:concerns
+            message:'Doctors fetched Successfully',
+            data:doctors
         });
-    }catch(error){
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             status:500,

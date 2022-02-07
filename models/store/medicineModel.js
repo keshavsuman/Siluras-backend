@@ -9,9 +9,13 @@ const medicineSchema = mongoose.Schema({
     },
     category:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'storeCategory'
+        ref:'category'
     },
-    quantity:{
+    subCategory:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'subCategory'
+    },
+    sellingFormat:{
         amount:{type:Number},
         type:{type:String}
     },
