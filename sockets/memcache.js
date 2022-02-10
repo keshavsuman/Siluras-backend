@@ -1,16 +1,13 @@
 class MemCache {
 
-    static hset(set, key, val) {
-      if (!this.memCache[set]) {
-        this.memCache[set] = {};
-      }
-      this.memCache[set][key] = val;
+    static hset(key, val) {
+      this.memCache[key] = val;
     }
   
-    static hget(set, key) {
+    static hget(key) {
       let val = null;
-      if (this.memCache[set] && this.memCache[set][key]) {
-        val = this.memCache[set][key];
+      if (this.memCache[key]) {
+        val = this.memCache[key];
       }
       return val;
     }
@@ -24,3 +21,5 @@ class MemCache {
     static memCache = {};
   }
   
+
+module.exports = MemCache;

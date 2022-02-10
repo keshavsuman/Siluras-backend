@@ -1,3 +1,6 @@
+const Agora = require('./agora');
+const uuid = require('uuid');
+const MemCache = require('./memcache');
 class SocketEvents {
      agora = new Agora();
 
@@ -22,10 +25,12 @@ class SocketEvents {
      */
      connectCall() {
         this.socket.on("connectCall", async (data) => {
-            const me = this.socket.user.id;
+            const me = this.socket.user._id;
             data.channel = uuid.v1();
             data.token = await this.agora.generateToken(data.channel);
-            const recSocket = MemCache.hget(process.env.CHAT_SOCKET, `${data.id}`);
+            const recSocket = MemCache.hget(data.remoteUserId);
+            this.socket.emit('connectCall',data);
+            console.log(recSocket);
             if (recSocket) {
                 data.id = me;
                 this.nsp.to(recSocket).emit("onCallRequest", data);
@@ -71,3 +76,5 @@ class SocketEvents {
 
 
 }
+
+module.exports = SocketEvents;

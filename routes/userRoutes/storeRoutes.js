@@ -4,7 +4,6 @@ const storeRoutes = express.Router();
 
 storeRoutes.post('/getMedicines',storeController.getMedicines);
 storeRoutes.post('/getCategories',storeController.getCategories);
-storeRoutes.post('/getAllCategories',storeController.getAllCategories);
 storeRoutes.post('/getAdvertisements',storeController.getAdvertisements);
 storeRoutes.post('/addtoCart',storeController.addToCart);
 storeRoutes.get('/getCart',storeController.getCart);

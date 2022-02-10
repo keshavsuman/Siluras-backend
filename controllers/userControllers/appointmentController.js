@@ -2,17 +2,30 @@ const healthConcernModel = require('../../models/healthConcernModel');
 const appointmentBookingModel = require('../../models/appointmentBookings');
 const doctorModel = require('../../models/doctorModel');
 
-module.exports.getAppointments = async (req,res)=>{
+module.exports.getMyAppointments = async (req,res)=>{
     try {
-        const {select,project,limit,skip} = req.body;
-        const appointments = await appointmentBookingModel.find({
-            ...select,
+        console.log(req.user._id);
+        const past = await appointmentBookingModel.find({
+            date:{
+                $lt: new Date()
+            },
             patientId:req.user._id
-        },project).populate('doctorId').populate('healthConcernId').populate('patientId').limit(limit??20).skip(skip??0);
+        }).populate('doctorId').populate('healthConcernId').populate('patientId');
+
+        const upcoming = await appointmentBookingModel.find({
+            date:{
+                $gte: new Date()
+            },
+            patientId:req.user._id
+        }).populate('doctorId').populate('healthConcernId').populate('patientId');
+        
         res.status(200).json({
             status:200,
             message:'Appointments fetched Successfully',
-            data:appointments
+            data:{
+                past,
+                upcoming
+            }
         });
     } catch (error) {
         console.log(error);
@@ -32,10 +45,11 @@ module.exports.bookAppointment = async (req,res)=>{
             healthConcernId:req.body.healthConcernId,
             doctorId:req.body.doctorId,
         });
+        const newAppointment = await appointmentBookingModel.findById(appointment._id).populate('patientId').populate('doctorId').populate('healthConcernId');
         res.status(200).json({
             status:200,
             message:'Appointments Booked Successfully',
-            data:appointment
+            data:newAppointment
         });
     } catch (error) {
         console.log(error);

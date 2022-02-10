@@ -5,6 +5,9 @@ const cors = require('cors');
 const routes = require('./routes/index');
 const {Server} = require('socket.io');
 const {createServer} = require('http');
+const SocketEvents = require('./sockets/sockets');
+const MemCache = require('./sockets/memcache');
+const jsonwebtoken = require('jsonwebtoken');
 
 app.use(cors());
 app.use(express.json());
@@ -19,12 +22,16 @@ const io = new Server(httpServer,{
     transports: ["websocket", "polling"],
 });
 
-io.of('/call').use(async (socket,next)=>{
-    console.log("socket connected");
+const client = io.of('/call');
+client.use(async (socket,next)=>{
+    const user = jsonwebtoken.verify(socket.handshake.auth.token,'Hello world');
+    socket.user = user;
     next();
 }).on("connection",(socket)=>{
     console.log("socket connected");
-    // socket.on("")
+    MemCache.hset(socket.user._id,socket.id);
+    const socketEvents = new SocketEvents();
+    socketEvents.init(client,socket);
 });
 
 httpServer.listen(9000, () => console.log('Server started on port 9000'));

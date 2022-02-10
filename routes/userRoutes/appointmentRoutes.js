@@ -3,8 +3,8 @@ const appointmentController = require('../../controllers/userControllers/appoint
 
 const appointmentRoutes = express.Router();
 
-appointmentRoutes.get('/appointments',appointmentController.getAppointments);
-appointmentRoutes.get('/appointmentBookings',appointmentController.getAppointments);
+// appointmentRoutes.get('/appointments',appointmentController.getAppointments);
+appointmentRoutes.get('/getMyAppointments',appointmentController.getMyAppointments);
 appointmentRoutes.post('/bookAppointment',appointmentController.bookAppointment);
 appointmentRoutes.post('/getHealthConcerns',appointmentController.getHealthConcerns);
 appointmentRoutes.post('/getDoctors',appointmentController.getDoctors);

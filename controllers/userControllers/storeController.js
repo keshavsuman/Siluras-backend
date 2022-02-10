@@ -8,7 +8,39 @@ const razorpay = require('razorpay');
 module.exports.getCategories = async (req,res) => {
     try {
         const {select,project,skip,limit} = req.body;
-        const categories = await categoryModel.find(select,project).skip(skip).limit(limit);
+        const categories = await subCategoryModel.aggregate([
+            {
+              '$group': {
+                '_id': '$categoryId', 
+                'subCategories': {
+                  '$push': '$$ROOT'
+                }
+              }
+            }, {
+              '$lookup': {
+                'from': 'categories', 
+                'localField': '_id', 
+                'foreignField': '_id', 
+                'as': 'category'
+              }
+            }, {
+              '$addFields': {
+                '_id': {
+                  '$first': '$category._id'
+                }, 
+                'categoryName': {
+                  '$first': '$category.categoryName'
+                }, 
+                'image_url': {
+                  '$first': '$category.image_url'
+                }
+              }
+            },{
+                "$project":{
+                    "category":0
+                }
+            }
+          ]);
         res.status(200).json({
             status:200,
             message:"Categories fetched successfully",
@@ -23,23 +55,6 @@ module.exports.getCategories = async (req,res) => {
     }
 }
 
-module.exports.getAllCategories = async (req,res) => {
-    try {
-        const {select,project,limit,skip} = req.body;
-        const categories = await categoryModel.find(select,project).populate('subCategories').limit(limit??50).skip(skip??0);
-        res.status(200).json({
-            status:200,
-            message:"Categories fetched successfully",
-            data:categories,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            status:500,
-            message:error.message,
-        });
-    }
-}
 module.exports.getAdvertisements = async (req,res) => {
     try {
         const {select,project,skip,limit} = req.body;
