@@ -5,12 +5,14 @@ const appointmentBookingSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'appointment'
     },
+    bookingId:{
+        type:Number,
+    },
     date:{
         type:Date,
     },
     timeSlot:{
-        startTime:{type:String},
-        endTime:{type:String}
+        type:Date,
     },
     patientId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -19,6 +21,14 @@ const appointmentBookingSchema = mongoose.Schema({
     doctorId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'doctor'
+    },
+    healthConcernId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'healthConcern'
+    },
+    status:{
+        type:String,
+        default:'ACTIVE'
     }
 },{
     timestamps:true

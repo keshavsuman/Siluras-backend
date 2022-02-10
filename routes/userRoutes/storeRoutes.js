@@ -10,5 +10,6 @@ storeRoutes.post('/addtoCart',storeController.addToCart);
 storeRoutes.get('/getCart',storeController.getCart);
 storeRoutes.post('/updateQuantity',storeController.updateQuantity);
 storeRoutes.post('/removeFromCart',storeController.removeFromCart);
+storeRoutes.post('/createOrder',storeController.createOrder);
 
 module.exports = storeRoutes;

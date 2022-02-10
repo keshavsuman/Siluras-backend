@@ -8,7 +8,7 @@ module.exports.getAppointments = async (req,res)=>{
         const appointments = await appointmentBookingModel.find({
             ...select,
             patientId:req.user._id
-        },project).limit(limit??20).skip(skip??0);
+        },project).populate('doctorId').populate('healthConcernId').populate('patientId').limit(limit??20).skip(skip??0);
         res.status(200).json({
             status:200,
             message:'Appointments fetched Successfully',
@@ -28,11 +28,8 @@ module.exports.bookAppointment = async (req,res)=>{
         const appointment = await appointmentBookingModel.create({
             patientId:req.user._id,
             date:req.body.date,
-            timeSlot:{
-                startTime:req.body.startTime,
-                endTime:req.body.endTime,
-            },
-            healthConcern:req.body.healthConcern,
+            timeSlot:req.body.timeSlot,
+            healthConcernId:req.body.healthConcernId,
             doctorId:req.body.doctorId,
         });
         res.status(200).json({

@@ -3,6 +3,7 @@ const advertisementModel = require('../../models/advertisementModel');
 const categoryModel = require('../../models/store/categoryModel');
 const subCategoryModel = require('../../models/store/subCategoryModel');
 const cartModel = require('../../models/store/cartModel');
+const razorpay = require('razorpay');
 
 module.exports.getCategories = async (req,res) => {
     try {
@@ -158,6 +159,28 @@ module.exports.getCart = async (req,res)=>{
         });
     }
 }
+const instance = new razorpay({
+    key_id: 'rzp_test_1DPqQZxX8XzX8x',
+    key_secret: 'YOUR_KEY_SECRET',
+});
 
 
-
+module.exports.createOrder = async (req,res)=>{
+    try {
+        instance.orders.create({
+            amount: req.body.amount,
+            currency: "INR",
+            receipt: "receipt#1",
+            notes: {
+              key1: "value3",
+              key2: "value2"
+            }
+          })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
