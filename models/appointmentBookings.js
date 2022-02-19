@@ -10,9 +10,11 @@ const appointmentBookingSchema = mongoose.Schema({
     },
     date:{
         type:Date,
+        required:true
     },
     timeSlot:{
         type:Date,
+        required:true
     },
     patientId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -34,4 +36,4 @@ const appointmentBookingSchema = mongoose.Schema({
     timestamps:true
 });
 
-module.exports =  mongoose.model('appointmentBookings',appointmentBookingSchema);
+    module.exports =  mongoose.model('appointmentBookings',appointmentBookingSchema);

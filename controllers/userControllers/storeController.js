@@ -3,7 +3,12 @@ const advertisementModel = require('../../models/advertisementModel');
 const categoryModel = require('../../models/store/categoryModel');
 const subCategoryModel = require('../../models/store/subCategoryModel');
 const cartModel = require('../../models/store/cartModel');
-const razorpay = require('razorpay');
+const orderModel = require('../../models/store/orderModel');
+
+// const instance = new razorpay({
+//     key_id: 'rzp_test_H02syBjfkIEQeY',
+//     key_secret: 'Zb3gTtCZZXcSxhTkOi66BRpg'
+// });
 
 module.exports.getCategories = async (req,res) => {
     try {
@@ -174,28 +179,75 @@ module.exports.getCart = async (req,res)=>{
         });
     }
 }
-const instance = new razorpay({
-    key_id: 'rzp_test_1DPqQZxX8XzX8x',
-    key_secret: 'YOUR_KEY_SECRET',
-});
 
 
-module.exports.createOrder = async (req,res)=>{
+module.exports.placeOrder = async (req,res)=>{
     try {
-        instance.orders.create({
-            amount: req.body.amount,
-            currency: "INR",
-            receipt: "receipt#1",
-            notes: {
-              key1: "value3",
-              key2: "value2"
-            }
+        const order  = await orderModel.create({
+            patientId:req.user._id,
+            medicineId:req.body.medicineId,
+            totalPrice:req.body.totalPrice,
+            paymentStatus:'pending',
+        });
+        await cartModel.findOneAndUpdate({patientId:req.user._id},{
+            products:[],
+            totalPrice:0
+        });
+          res.status(201).json({
+              status:201,
+              message:"Order created successfully",
+              data:order,
           })
     } catch (error) {
         console.log(error);
         res.status(500).json({
             status:500,
             message:error.message,
+        });
+    }
+}
+
+
+module.exports.getOrders = async (req,res)=>{
+    try {
+        const {select,project,skip,limit} = req.body;
+        const order = await orderModel.find({
+            patientId:req.user._id,
+            ...select
+        },project).skip(skip??0).limit(limit??20);
+        res.status(200).json({
+            status:200,
+            message:"Orders fetched Successfully",
+            data:order
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.updateOrder = async (req,res)=>{
+    try {
+        const order = await orderModel.findByIdAndUpdate(req.body._id,{
+            paymentId:req.body.paymentId,
+            orderId:req.body.orderId,
+            paymentStatus:req.body.paymentStatus,
+            status:req.body.status
+        },{new:true});
+        console.log(order);
+        res.status(200).json({
+            status:200,
+            message:"Oder Updated Successfully",
+            data:order
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message
         });
     }
 }

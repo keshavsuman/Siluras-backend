@@ -10,6 +10,15 @@ const DoctorSchema = mongoose.Schema({
     email:{
         type:String
     },
+    gender:{
+        type:String
+    },
+    blood_group:{
+        type:String
+    },
+    marital_status:{
+        type:String
+    },
     password:{
         type:String
     },
@@ -24,6 +33,9 @@ const DoctorSchema = mongoose.Schema({
     },
     firebase_token:{
         type:String
+    },
+    dob:{
+        type:Date,
     },
     speciality:{
         type:String

@@ -2,8 +2,8 @@ const { RtcTokenBuilder, RtcRole } = require("agora-access-token");
 // import * as dotenv from "dotenv";
 // dotenv.config();
 // Rtc Examples
-const appID = 'ad4b7311c7ed4ddaa17c14184dd3c2be';
-const appCertificate = 'a63bf26a84d64783b47b9e7352e8fd23';
+const appID = '365b7eacbfa849b7b072234937adf729';
+const appCertificate = '5f18e2c211214637956d97ae2453dff1';
 const role = RtcRole.PUBLISHER;
 
 class Agora {

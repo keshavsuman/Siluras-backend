@@ -1,10 +1,10 @@
 const healthConcernModel = require('../../models/healthConcernModel');
 const appointmentBookingModel = require('../../models/appointmentBookings');
 const doctorModel = require('../../models/doctorModel');
+const appointmentConfig = require('../../configs/appointmentConfigs');
 
 module.exports.getMyAppointments = async (req,res)=>{
     try {
-        console.log(req.user._id);
         const past = await appointmentBookingModel.find({
             date:{
                 $lt: new Date()
@@ -35,7 +35,17 @@ module.exports.getMyAppointments = async (req,res)=>{
         });
     }
 }
-
+module.exports.getAppointmentConfig = async (req,res)=>{
+    try {
+        res.status(200).json(appointmentConfig);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message
+        });
+    }
+}
 module.exports.bookAppointment = async (req,res)=>{
     try {
         const appointment = await appointmentBookingModel.create({

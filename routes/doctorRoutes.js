@@ -10,8 +10,10 @@ doctorRouter.use('/auth',authRoutes);
 doctorRouter.use(doctorAuth);
 doctorRouter.use('/appointment',appointmentRoutes);
 doctorRouter.use('/patient',patientRoutes);
-doctorRouter.get('/notifications',doctorController.getNotifications);
+doctorRouter.post('/notifications',doctorController.getNotifications);
 doctorRouter.get('/',doctorController.getDoctor);
+doctorRouter.post('/updateDoctor',doctorController.updateDoctor);
+doctorRouter.post('/updateFirebaseToken',doctorController.updateFirebaseToken);
 
 
 function doctorAuth(req,res,next){
