@@ -129,7 +129,10 @@ module.exports.uploadMedicalRecord = async (req,res)=>{
 module.exports.getMedialRecords = async (req,res)=>{
     try {
         const {select,project,skip,limit} = req.body;
-        const medicalRecords = await medicalRecordModel.find(select,project).skip(skip??0).limit(limit??20);
+        const medicalRecords = await medicalRecordModel.find({
+            ...select,
+            patientId:req.user._id
+        },project).skip(skip??0).limit(limit??20);
         res.status(200).json({
             status:200,
             message:"Medical records fetched successfully",
