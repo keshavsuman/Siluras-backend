@@ -12,10 +12,7 @@ module.exports.login = async (req,res)=>{
             if(bcrypt.compareSync(password, patient['password'])){
                 const token = jsonwebtoken.sign(patient.toObject(),
                 'Hello world',
-                {
-                    expiresIn: 60 * 60 * 24
-                });
-
+                );
                 res.status(200).json({
                     status:200,
                     message:"Login Successful",
@@ -124,9 +121,7 @@ module.exports.userLoginUsingOTP = async (req,res)=>{
         if(patient){
                 const token = jsonwebtoken.sign(patient.toObject(),
                 'Hello world',
-                {
-                    expiresIn: 60 * 60 * 24
-                });
+                );
 
                 res.status(200).json({
                     status:200,

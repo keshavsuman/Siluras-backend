@@ -6,5 +6,6 @@ authRoutes.post('/login',authenticationController.login);
 authRoutes.post('/signup',authenticationController.signup);
 authRoutes.post('/loginUsingMobileNumber',authenticationController.loginUsingMobileNumber);
 authRoutes.post('/singupUsingMobileNumber',authenticationController.signupUsingMobileNumber);
+authRoutes.post('/isDoctorExitWithMobileNumber',authenticationController.isDoctorExitWithMobileNumber);
 
 module.exports = authRoutes;

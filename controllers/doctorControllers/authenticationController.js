@@ -130,7 +130,6 @@ module.exports.loginUsingMobileNumber = async (req,res)=>{
             const token = jsonwebtoken.sign(doctor.toObject(),
             'Hello world',
             {
-                expiresIn: 60 * 60 * 24
             });
             res.status(200).json({
                 status:200,
@@ -144,6 +143,31 @@ module.exports.loginUsingMobileNumber = async (req,res)=>{
             res.status(200).json({
                 status:200,
                 message:"Doctor with this mobile number doesn't exists",
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message
+        });
+    }
+}
+
+module.exports.isDoctorExitWithMobileNumber = async (req,res) =>{
+    try {
+        const doctor  = await doctorModel.findOne({mobileNumber:req.body.mobileNumber});
+        if(doctor){
+            res.status(200).json({
+                status:200,
+                message:"Doctor with this mobile number already exists",
+                data:true
+            });
+        }else{
+            res.status(200).json({
+                status:200,
+                message:"Doctor with this mobile number doesn't exists",
+                data:false
             });
         }
     } catch (error) {

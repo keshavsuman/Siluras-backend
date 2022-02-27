@@ -27,8 +27,8 @@ const PatientSchema = mongoose.Schema({
     gender:{
         type:String
     },
-    age:{
-        type:Number
+    dob:{
+        type:Date
     },
     height:{
         type:Number

@@ -14,9 +14,7 @@ module.exports.login = async (req,res)=>{
                 admin.__v = undefined;
                 const token = jsonwebtoken.sign(admin.toObject(),
                 'Hello world',
-                {
-                    expiresIn: 60 * 60 * 24
-                });
+                );
                 res.status(200).json({
                     status:200,
                     message:"Admin login Successful",
