@@ -107,7 +107,32 @@ module.exports.uploadMedicalRecord = async (req,res)=>{
     try {
         const medicalRecord = await medicalRecordModel.create({
             patientId:req.user._id,
+            type:'medicalRecord',
             fileName:req.file.originalname,
+            medicalRecordURL:req.file.location,
+            fileType:req.file.contentType,
+            fileSize:req.file.size
+        });
+        res.status(201).json({
+            status:201,
+            message:"Medical record uploaded successfully",
+            data:medicalRecord
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.uploadPrescriptionForOrder = async (req,res) =>{
+    try {
+        const medicalRecord = await medicalRecordModel.create({
+            patientId:req.user._id,
+            fileName:req.file.originalname,
+            type:'prescription',
             medicalRecordURL:req.file.location,
             fileType:req.file.contentType,
             fileSize:req.file.size
@@ -131,7 +156,8 @@ module.exports.getMedialRecords = async (req,res)=>{
         const {select,project,skip,limit} = req.body;
         const medicalRecords = await medicalRecordModel.find({
             ...select,
-            patientId:req.user._id
+            patientId:req.user._id,
+            type:'medicalRecords'
         },project).skip(skip??0).limit(limit??20);
         res.status(200).json({
             status:200,

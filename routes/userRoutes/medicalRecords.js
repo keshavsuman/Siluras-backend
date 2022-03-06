@@ -32,5 +32,6 @@ const s3multer = multer({
 
 router.put('/uploadFileAndGetUrl',s3multer.single('file'),userController.uploadMedicalRecord);
 router.post('/getMediclaRecords',userController.getMedialRecords);
+router.put('/uploadPrescriptionForOrder',s3multer.single('file'),userController.uploadPrescriptionForOrder);
 
 module.exports = router;

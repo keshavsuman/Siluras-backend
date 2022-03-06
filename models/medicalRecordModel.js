@@ -19,6 +19,8 @@ const medicalRecordSchema = new mongoose.Schema({
     fileSize:{
         type:Number
     }
+},{
+    timestamps:true
 });
 
 module.exports = mongoose.model('medicalRecord',medicalRecordSchema);

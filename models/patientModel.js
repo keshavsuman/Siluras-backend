@@ -30,6 +30,9 @@ const PatientSchema = mongoose.Schema({
     dob:{
         type:Date
     },
+    type:{
+        type:String
+    },
     height:{
         type:Number
     },

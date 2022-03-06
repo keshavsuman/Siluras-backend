@@ -7,6 +7,7 @@ const doctorRoutes = require('../routes/adminRoutes/doctorRoutes');
 const appointmentRoutes = require('../routes/adminRoutes/appointmentRoutes');
 const patientRoutes = require('../routes/adminRoutes/patientRoutes');
 const storeRoutes = require('../routes/adminRoutes/storeRoutes');
+const diagnosticRoutes = require('./adminRoutes/diagnosticsRoutes');
 
 adminRouter.use('/auth',authRoutes);
 adminRouter.use(adminAuth);
@@ -15,6 +16,7 @@ adminRouter.use('/appointment',appointmentRoutes);
 adminRouter.use('/patient',patientRoutes);
 adminRouter.use('/medicine',medicineRoutes);
 adminRouter.use('/store',storeRoutes);
+adminRouter.use('/diagnostics',diagnosticRoutes);
 
 
 function adminAuth(req,res,next){
