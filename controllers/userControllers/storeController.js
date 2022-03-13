@@ -123,8 +123,8 @@ module.exports.addToCart = async (req,res) => {
 
 module.exports.updateQuantity = async (req,res) => {
     try {
-        const data = await cartModel.findOneAndUpdate({patientId:req.user._id},{
-
+        const data = await cartModel.findOneAndUpdate({patientId:req.user._id,'products.medicineId':req.body.medicineId},{
+            $set:{ [`products.$.quantity`]:req.body.quantity }
         });
         res.status(200).json({
             status:200,
