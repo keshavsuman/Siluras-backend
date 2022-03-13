@@ -7,6 +7,7 @@ storeRoutes.post('/getCategories',storeController.getCategories);
 storeRoutes.post('/getAdvertisements',storeController.getAdvertisements);
 storeRoutes.post('/addtoCart',storeController.addToCart);
 storeRoutes.get('/getCart',storeController.getCart);
+storeRoutes.post('/searchProducts',storeController.searchProducts);
 storeRoutes.post('/updateQuantity',storeController.updateQuantity);
 storeRoutes.post('/removeFromCart',storeController.removeFromCart);
 storeRoutes.post('/placeOrder',storeController.placeOrder);

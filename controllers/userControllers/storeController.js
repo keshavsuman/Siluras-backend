@@ -99,7 +99,7 @@ module.exports.getMedicines = async (req,res) => {
 module.exports.addToCart = async (req,res) => {
     try {
         const cart = await cartModel.findOneAndUpdate({patientId:req.user._id},{
-            $push:{
+            $addToSet:{
                 products:{
                     medicineId:req.body.id,
                     quantity:req.body.quantity,
@@ -237,11 +237,36 @@ module.exports.updateOrder = async (req,res)=>{
             paymentStatus:req.body.paymentStatus,
             status:req.body.status
         },{new:true});
-        console.log(order);
         res.status(200).json({
             status:200,
             message:"Oder Updated Successfully",
             data:order
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message
+        });
+    }
+}
+
+module.exports.searchProducts = async (req,res)=>{
+    try {
+        const products = await medicineModel.find(
+            {
+                $match:{
+                    name:{
+                        $regex:req.body.search,
+                        $options:'i'
+                    }
+                }
+            }
+        );
+        res.status(200).json({
+            status:200,
+            message:"products searched Successfully",
+            data:products
         });
     } catch (error) {
         console.log(error);
