@@ -5,6 +5,7 @@ const testsModel = require('../../models/testsModel');
 const contactUsModel = require('../../models/contactUsModel');
 const medicalRecordModel = require('../../models/medicalRecordModel');
 const bookingModel = require('../../models/appointmentBookings');
+const spotlightModel = require('../../models/spotlightModel');
 
 module.exports.getNotifications = async (req,res) =>{
     try {
@@ -165,6 +166,23 @@ module.exports.getMedialRecords = async (req,res)=>{
             data:medicalRecords
         });
     } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.getSpotlight = async (req,res)=>{
+    try{
+        const spotlight = await spotlightModel.find({});
+        res.status(200).json({
+            status:200,
+            message:"Spotlight fetched successfully",
+            data:spotlight
+        });
+    }catch(error){
         console.log(error);
         res.status(500).json({
             status:500,

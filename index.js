@@ -8,10 +8,12 @@ const {createServer} = require('http');
 const SocketEvents = require('./sockets/sockets');
 const MemCache = require('./sockets/memcache');
 const jsonwebtoken = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-mongoose.connect('mongodb://admin:siluras_7272@siluras.com:27017/doctor', { useNewUrlParser: true },()=>{
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true },()=>{
     console.log("Database connected");
 });
 
@@ -24,8 +26,8 @@ const io = new Server(httpServer,{
 
 const client = io.of('/call');
 client.use(async (socket,next)=>{
-    const user = jsonwebtoken.verify(socket.handshake.auth.token,'Hello world');
-    socket.user = user;
+    // const user = jsonwebtoken.verify(socket.handshake.auth.token,'Hello world');
+    // socket.user = user;
     next();
 }).on("connection",(socket)=>{
     console.log("socket connected");
@@ -34,5 +36,5 @@ client.use(async (socket,next)=>{
     socketEvents.init(client,socket);
 });
 
-httpServer.listen(9000, () => console.log('Server started on port 9000'));
+httpServer.listen(process.env.PORT, () => console.log('Server started on port '+process.env.PORT));
 

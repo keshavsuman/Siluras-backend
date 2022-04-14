@@ -38,6 +38,7 @@ module.exports.addDoctor = async (req,res)=>{
                 last_name:last_name,
                 email:email,
                 // password:encryptedPassword,
+                mobileNumber:req.body.mobileNumber,
                 about:about,
                 speciality:speciality,
                 profilePicture:profilePicture

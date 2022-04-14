@@ -50,6 +50,11 @@ const PatientSchema = mongoose.Schema({
     },
     maritalStatus:{
         type:String
+    },
+    isProfileComplete:{
+        type:Boolean,
+        required:true,
+        default:false
     }
 },{
     timestamps:true

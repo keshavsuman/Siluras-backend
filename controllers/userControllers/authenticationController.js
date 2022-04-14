@@ -1,9 +1,13 @@
 const doctorModel = require('../../models/doctorModel');
 const patientModel = require('../../models/patientModel');
+const otpModel = require('../../models/OTPModel');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cartModel = require('../../models/store/cartModel');
-
+const axios = require("axios");
+const otpGenerator = require("otp-generator");
+const uuidv4 = require("uuid4");
+const moment = require("moment");
 module.exports.login = async (req,res)=>{
     try {
         const { email,password } = req.body;
@@ -182,6 +186,78 @@ module.exports.userSignupUsingOTP = async (req,res)=>{
         res.status(500).json({
             status:500,
             message:error.message
+        });
+    }
+}
+
+module.exports.getOTP = async (req,res) =>{
+    try {
+        var {mobileNumber}=req.body;
+        var otps = await otpModel.find({mobileNumber:mobileNumber});
+        // if(otps.length!=0){
+        //     res.status(400).json({
+        //         status:400,
+        //         message:"OTP already exists",
+        //     });
+        // }else{
+            const OTP = otpGenerator.generate(process.env.OTPLENGTH,{upperCaseAlphabets: false, specialChars: false,lowerCaseAlphabets:false,digits:true });
+            var messageBody= `Your One Time Password (OTP) for Siluras login is ${OTP} PERIPHERALS THE BRANDS PARK`;
+            var url = `http://sms.messageindia.in/v2/sendSMS?username=siluras&message=${messageBody}&sendername=${process.env.SMS_SENDER_NAME}&smstype=TRANS&numbers=${mobileNumber}&apikey=${process.env.SMS_API_KEY}&peid=${process.env.SMS_ENTITY_ID}&templateid=${process.env.SMS_TEMPLATE_ID}`;
+            const response = await axios.get(url);
+            if(response.status==200 && response.data[0].msg=="successfully submitted"){
+                await otpModel.create({
+                    otp:OTP,
+                    mobileNumber:mobileNumber
+                });
+                res.status(200).json({
+                    status:200,
+                    message:"OTP generated",
+                });
+            }else{
+                res.status(400).json({
+                    status:400,
+                    message:"something went wrong"  
+                })
+            }
+        // }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message 
+        });
+    }
+}
+
+module.exports.verifyOTP = async (req,res)=>{
+    try {
+        const {otp,mobileNumber} = req.body;
+        const data = await otpModel.find({
+            mobileNumber:mobileNumber
+        });
+        if(data.length>0){
+            var savedOTP = data[0].otp;
+            var createdAt = moment(data[0].createdAt);
+            var now = moment.now();
+            var diff = createdAt.diff(now,'minutes');
+            console.log(diff);
+            if(otp==savedOTP){
+                res.status(200).json({
+                    statu:200,
+                    message:"OTP verified",
+                });
+            }else{
+                res.status(403).json({
+                    statu:403,
+                    message:"OTP doesn't match",
+                });
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
         });
     }
 }
