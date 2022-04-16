@@ -8,5 +8,6 @@ userRouter.post('/isUserExitWithMobileNumber',authController.isUserExitWithMobil
 userRouter.post('/userLoginUsingOTP',authController.userLoginUsingOTP);
 userRouter.post('/userSignupUsingOTP',authController.userSignupUsingOTP);
 userRouter.post('/getOTP',authController.getOTP);
+userRouter.post('/verifyOTP',authController.verifyOTP);
 
 module.exports = userRouter;

@@ -68,10 +68,10 @@ module.exports.updateUser = async (req,res) =>{
             weight:req.body.weight,
             bloodGroup:req.body.bloodGroup,
             maritalStatus:req.body.maritalStatus
-        });
+        },{new:true});
         res.status(201).json({
             status:200,
-            message:"Contact us message sent successfully",
+            message:"User Updated successfully",
             data:user
         });
     } catch (error) {
