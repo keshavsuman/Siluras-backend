@@ -6,6 +6,7 @@ const contactUsModel = require('../../models/contactUsModel');
 const medicalRecordModel = require('../../models/medicalRecordModel');
 const bookingModel = require('../../models/appointmentBookings');
 const spotlightModel = require('../../models/spotlightModel');
+const welcomeImageModel = require('../../models/welcomeImageModel');
 
 module.exports.getNotifications = async (req,res) =>{
     try {
@@ -180,6 +181,23 @@ module.exports.getSpotlight = async (req,res)=>{
         res.status(200).json({
             status:200,
             message:"Spotlight fetched successfully",
+            data:spotlight
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
+
+module.exports.getWelcomeImage = async (req,res)=>{
+    try{
+        const spotlight = await welcomeImageModel.find({});
+        res.status(200).json({
+            status:200,
+            message:"welcome image fetched successfully",
             data:spotlight
         });
     }catch(error){

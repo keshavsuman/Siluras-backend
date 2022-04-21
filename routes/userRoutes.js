@@ -19,8 +19,8 @@ userRouter.get('/visits',userController.getVisits);
 userRouter.get('/',userController.getUser);
 userRouter.post('/updateUser',userController.updateUser);
 userRouter.post('/contactUs',userController.contactUs);
-// userRouter.post('/getWelcomeImage',userController.getWelcomeImage);
-// userRouter.post('/getSpotlight',userController.getWelcomeImage);
+userRouter.get('/welcomeImage',userController.getWelcomeImage);
+userRouter.get('/getSpotlight',userController.getSpotlight);
 
 function patientAuth(req,res,next){
     try {

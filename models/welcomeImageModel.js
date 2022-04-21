@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const spotlightSchema = mongoose.Schema({
+const welcomeImageSchema = mongoose.Schema({
    image:{
        type:String,
        required:true
@@ -9,4 +9,4 @@ const spotlightSchema = mongoose.Schema({
     timestamps:true
 });
 
-module.exports = mongoose.model("spotlight", spotlightSchema);
+module.exports = mongoose.model("welcomeImage", welcomeImageSchema);
