@@ -9,5 +9,7 @@ userRouter.post('/userLoginUsingOTP',authController.userLoginUsingOTP);
 userRouter.post('/userSignupUsingOTP',authController.userSignupUsingOTP);
 userRouter.post('/getOTP',authController.getOTP);
 userRouter.post('/verifyOTP',authController.verifyOTP);
+userRouter.post('/googleLogin',authController.googleLogin);
+userRouter.post('/facebookLogin',authController.facebookLogin);
 
 module.exports = userRouter;
