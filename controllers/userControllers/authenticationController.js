@@ -1,7 +1,7 @@
-const jsonwebtoken = require('jsonwebtoken');
-const {Doctor,Patient,OTP,Cart} = require('../../models');
+const {Patient,OTP,Cart} = require('../../models');
+const {PatientService} = require('../../services/patient');
+const UserResponse = require('../../helpers/userResponse');
 
-const bcrypt = require('bcryptjs');
 const axios = require("axios");
 const otpGenerator = require("otp-generator");
 const moment = require("moment");
@@ -10,14 +10,11 @@ const moment = require("moment");
 module.exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const patient = await Patient.findOne({ email: email });
+        const patient = await PatientService.getPatientUsingEmail(email);
         if (patient) {
-            if (bcrypt.compareSync(password, patient['password'])) {
-                const token = jsonwebtoken.sign(patient.toObject(),
-                    'Hello world',
-                );
-                res.status(200).json({
-                    status: 200,
+            if (PatientService.verifyPassword(password, patient.password)) {
+                const token = PatientService.generateToken(patient);
+                UserResponse(res).status(200).json({
                     message: "Login Successful",
                     data: {
                         user: patient,
@@ -25,31 +22,27 @@ module.exports.login = async (req, res) => {
                     }
                 });
             } else {
-                res.status(401).json({
+                UserResponse(res).status(401).json({
                     status: 401,
                     message: "Password incorrect",
                 });
             }
         } else {
-            res.status(401).json({
+            UserResponse(res).status(401).json({
                 status: 401,
                 message: "User with this email doesn't exits",
             });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            status: 500,
-            message: error.message,
-            data: null
-        });
+        UserResponse(res).error(error);
     }
 }
 
 module.exports.signup = async (req, res) => {
     try {
-        const { email, password, name, mobileNumber } = req.body;
-        const patient = await Patient.findOne({ email: email });
+        const { email, password, name } = req.body;
+        const patient = await PatientService.getPatientUsingEmail(email);
         if (patient) {
             res.status(200).json({
                 status: 200,
@@ -60,33 +53,24 @@ module.exports.signup = async (req, res) => {
             const firstName = names.shift();
             const lastName = names.join(' ');
 
-            var salt = await bcrypt.genSalt();
-            var encryptedPassword = await bcrypt.hash(password, salt);
-
-            const newPatient = new Patient({
-                email: email,
-                password: encryptedPassword,
-                first_name: firstName,
-                last_name: lastName
+           const newPatient = await PatientService.createPatient({
+               first_name:firstName,
+               last_name:lastName,
+               email:email,
+               password:password
             });
-            await newPatient.save();
-            await Cart.create({
-                patientId: newPatient._id,
-                products: [],
-                totalPrice: 0
-            })
-            res.status(200).json({
-                status: 200,
+            newPatient.password = undefined;
+            UserResponse(res).status(201).json({
                 message: "Signup Successful",
-                // data:newPatient
+                data:{
+                    patient:newPatient,
+                    token:PatientService.generateToken(newPatient)
+                }
             });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        });
+        UserResponse(res).error(error);
     }
 }
 
@@ -94,98 +78,70 @@ module.exports.signup = async (req, res) => {
 module.exports.isUserExitWithMobileNumber = async (req, res) => {
     try {
         const { mobileNumber } = req.body;
-        const patient = await Patient.findOne({ mobileNumber: mobileNumber });
+        const patient = await PatientService.getPatientUsingNumber(mobileNumber);
         if (patient) {
-            res.status(200).json({
-                status: 200,
+            UserResponse(res).status(200).json({
                 message: "User with this mobile number already exists",
                 data: true
             });
         } else {
-            res.status(200).json({
-                status: 200,
+            UserResponse(res).status(200).json({
                 message: "User with this mobile number doesn't exits",
                 data: false
             });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        });
+        UserResponse(res).error(error);
     }
 }
 
 module.exports.userLoginUsingOTP = async (req, res) => {
     try {
         const { mobileNumber } = req.body;
-        const patient = await Patient.findOne({ mobileNumber: mobileNumber });
+        const patient = await PatientService.getPatientUsingNumber(mobileNumber);
         if (patient) {
-            const token = jsonwebtoken.sign(patient.toObject(),
-                'Hello world',
-            );
-
-            res.status(200).json({
-                status: 200,
+            UserResponse(res).status(200).json({
                 message: "Login Successful",
                 data: {
                     user: patient,
-                    token: token
+                    token: PatientService.generateToken(patient)
                 }
             });
         } else {
-            res.status(401).json({
-                status: 401,
+            UserResponse(res).status(401).json({
                 message: "User with this mobile number doesn't exits",
             });
         }
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        })
+        UserResponse(res).error(error);
     }
 }
 
 module.exports.userSignupUsingOTP = async (req, res) => {
     try {
-        const { mobileNumber, name, firebaseId } = req.body;
+        const { mobileNumber, name } = req.body;
         const names = name.split(' ');
         const firstName = names.shift();
         const lastName = names.join(' ');
-        const newPatient = await Patient.create({
-            first_name: firstName,
-            last_name: lastName,
-            mobileNumber: mobileNumber,
-            firebaseId: firebaseId
+        
+        const newPatient = await PatientService.createPatient({
+            first_name:firstName,
+            last_name:lastName,
+            mobileNumber:mobileNumber
         });
-        await Cart.create({
-            patientId: newPatient._id,
-            products: [],
-            totalPrice: 0
-        });
-        const token = jsonwebtoken.sign(newPatient.toObject(),
-            'Hello world',
-            {
-                expiresIn: 60 * 60 * 24
-            });
 
-        res.status(201).json({
-            status: 201,
+        UserResponse(res).status(201).json({
             message: "Signup Successful",
             data: {
                 user: newPatient,
-                token: token
+                token: PatientService.generateToken(newPatient)
             }
         });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        });
+        UserResponse(res).error(error);
     }
 }
 
@@ -210,10 +166,7 @@ module.exports.getOTP = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        });
+        UserResponse(res).error(error);
     }
 }
 
@@ -249,21 +202,18 @@ module.exports.verifyOTP = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            status: 500,
-            message: error.message,
-        });
+        UserResponse(res).error(error);
     }
 }
 
 async function sendOTP(mobileNumber, res) {
-    const OTP = otpGenerator.generate(process.env.OTPLENGTH, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false, digits: true });
-    let messageBody = `Your One Time Password (OTP) for Siluras login is ${OTP} PERIPHERALS THE BRANDS PARK`;
+    const otp = otpGenerator.generate(process.env.OTPLENGTH, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false, digits: true });
+    let messageBody = `Your One Time Password (OTP) for Siluras login is ${otp} PERIPHERALS THE BRANDS PARK`;
     let url = `http://sms.messageindia.in/v2/sendSMS?username=siluras&message=${messageBody}&sendername=${process.env.SMS_SENDER_NAME}&smstype=TRANS&numbers=${mobileNumber}&apikey=${process.env.SMS_API_KEY}&peid=${process.env.SMS_ENTITY_ID}&templateid=${process.env.SMS_TEMPLATE_ID}`;
     const response = await axios.get(url);
     if (response.status == 200 && response.data[0].msg == "successfully submitted") {
         await OTP.create({
-            otp: OTP,
+            otp: otp,
             mobileNumber: mobileNumber
         });
         res.status(200).json({
@@ -283,55 +233,37 @@ async function sendOTP(mobileNumber, res) {
 
 module.exports.googleLogin = async (req, res) => {
     try {
-        const isExist = await Patient.findOne({ "email":req.body.email });
+        const isExist = await PatientService.getPatientUsingEmail(req.body.email);
         if(isExist)
         {
-            const token = jsonwebtoken.sign(isExist.toObject(),
-                'Hello world',
-            );
-            res.status(200).json({
-                status: 200,
+            UserResponse(res).status(200).json({
                 message: "Login Successful",
                 data: {
                     user: isExist,
-                    token: token
+                    token: PatientService.generateToken(isExist)
                 }
             });
         }else{
             const names = req.body.name.split(' ');
-
-            const newPatient = await Patient.create({
-                first_name: names[0],
-                last_name: names.splice(0,1).join(' '),
-                email: req.body.email,
-                firebaseId: req.body.firebaseId
+            const newPatient = await PatientService.createPatient({
+                first_name:names.splice(0,1).pop(),
+                last_name:names.join(' '),
+                email:req.body.email,
+                googleId:req.body.googleId,
+                firebaseToken:req.body.firebaseToken
             });
-            await Cart.create({
-                patientId: newPatient._id,
-                products: [],
-                totalPrice: 0
-            });
-            const token = jsonwebtoken.sign(newPatient.toObject(),
-                'Hello world',
-                {
-                    expiresIn: 60 * 60 * 24
-                });
-            res.status(201).json({
-                status: 201,
+            
+            UserResponse(res).status(201).json({
                 message: "Signup Successful",
                 data: {
                     user: newPatient,
-                    token: token
+                    token: PatientService.generateToken(newPatient)
                 }
             });
         }
     } catch (error) {
         console.log(error);
-        res.stataus(500).json({
-            status: 500,
-            message: error.message,
-            data:null
-        });
+        UserResponse(res).error(error);
     }
 }
 
@@ -340,9 +272,6 @@ module.exports.facebookLogin = async (req,res)=>{
         
     } catch (error) {
         console.log(error);
-        res.stataus(500).json({
-            status: 500,
-            message: error.message,
-        });
+        UserResponse(res).error(error);
     }
 }
