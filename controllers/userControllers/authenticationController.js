@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-const {Doctor,Patient,OTP,Cart} = require('../../models');
+const {Patient,OTP,Cart} = require('../../models');
 
 const bcrypt = require('bcryptjs');
 const axios = require("axios");
@@ -14,7 +14,7 @@ module.exports.login = async (req, res) => {
         if (patient) {
             if (bcrypt.compareSync(password, patient['password'])) {
                 const token = jsonwebtoken.sign(patient.toObject(),
-                    'Hello world',
+                    process.env.SECRET,
                 );
                 res.status(200).json({
                     status: 200,
@@ -123,7 +123,7 @@ module.exports.userLoginUsingOTP = async (req, res) => {
         const patient = await Patient.findOne({ mobileNumber: mobileNumber });
         if (patient) {
             const token = jsonwebtoken.sign(patient.toObject(),
-                'Hello world',
+                process.env.SECRET,
             );
 
             res.status(200).json({
@@ -167,7 +167,7 @@ module.exports.userSignupUsingOTP = async (req, res) => {
             totalPrice: 0
         });
         const token = jsonwebtoken.sign(newPatient.toObject(),
-            'Hello world',
+                process.env.SECRET,
             {
                 expiresIn: 60 * 60 * 24
             });

@@ -21,6 +21,15 @@ const PatientSchema = mongoose.Schema({
     firebaseId:{
         type:String
     },
+    googleId:{
+        type:String,
+    },
+    refresh_token:{
+        type:String
+    },
+    access_token:{
+        type:String
+    },
     firebase_token:{
         type:String
     },
