@@ -1,6 +1,7 @@
 module.exports.Patient = require('./patientModel');
 module.exports.Doctor = require('./doctorModel');
 module.exports.Admin = require('./adminModel');
+module.exports.Medicine = require('./store/medicineModel');
 module.exports.Invoice = require('./invoiceModel');
 module.exports.MedicalRecord = require('./medicalRecordModel');
 module.exports.Notification = require('./notificationModel');
@@ -9,3 +10,8 @@ module.exports.Spotlight = require('./spotlightModel');
 module.exports.OTP = require('./OTPModel');
 module.exports.Chat = require('./chatModel');
 module.exports.ContactUs = require('./contactUsModel');
+module.exports.Cart = require('./store/cartModel');
+module.exports.Category = require('./store/categoryModel');
+module.exports.Order = require('./store/orderModel');
+module.exports.Subcategory = require('./store/subCategoryModel');
+module.exports.RazorpayOrderHistory = require('./store/razorpayOrderHistoryModel');

@@ -22,7 +22,7 @@ adminRouter.use('/uploadFileandGetURL',uploadRouter);
 
 function adminAuth(req,res,next){
     try {
-        const data = jsonwebtoken.verify(req.headers.authorization.split(" ").pop(),"Hello world");
+        const data = jsonwebtoken.verify(req.headers.authorization.split(" ").pop(),process.env.SECRET);
         req.user = data;
         next();
     } catch (error) {
