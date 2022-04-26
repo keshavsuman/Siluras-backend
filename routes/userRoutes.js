@@ -1,14 +1,16 @@
 const express = require('express');
 const userRouter = express.Router();
-const authRoutes = require('./userRoutes/authRoutes');
-const appointmentRoutes = require('./userRoutes/appointmentRoutes');
-const storeRoutes = require('./userRoutes/storeRoutes');
+const authRoutes = require('./userRoutes/auth.routes');
+const healthArticleRoutes = require('./userRoutes/healthArticle.routes');
+const appointmentRoutes = require('./userRoutes/appointment.routes');
+const storeRoutes = require('./userRoutes/store.routes');
 const medicalRoutes = require('./userRoutes/medicalRecords');
-const diagnosticsRoutes = require('./userRoutes/diagnosticsRoutes');
+const diagnosticsRoutes = require('./userRoutes/diagnostics.routes');
 const userController = require('../controllers/userControllers/userController');
 const jsonwebtoken = require('jsonwebtoken');
 
 userRouter.use('/auth',authRoutes);
+userRouter.use('/healthArticles',healthArticleRoutes);
 userRouter.use(patientAuth);
 userRouter.use('/appointment',appointmentRoutes);
 userRouter.use('/store',storeRoutes);

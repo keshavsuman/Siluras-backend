@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-const jsonwebtoken = require('jsonwebtoken');
-const {Patient,OTP,Cart} = require('../../models');
-=======
 const {Patient,OTP,Cart} = require('../../models');
 const {PatientService} = require('../../services/patient');
 const UserResponse = require('../../helpers/userResponse');
->>>>>>> 4645f57d1bff81bc083b2e44e459627af0615c51
 
 const axios = require("axios");
 const otpGenerator = require("otp-generator");
@@ -17,18 +12,9 @@ module.exports.login = async (req, res) => {
         const { email, password } = req.body;
         const patient = await PatientService.getPatientUsingEmail(email);
         if (patient) {
-<<<<<<< HEAD
-            if (bcrypt.compareSync(password, patient['password'])) {
-                const token = jsonwebtoken.sign(patient.toObject(),
-                    process.env.SECRET,
-                );
-                res.status(200).json({
-                    status: 200,
-=======
             if (PatientService.verifyPassword(password, patient.password)) {
                 const token = PatientService.generateToken(patient);
                 UserResponse(res).status(200).json({
->>>>>>> 4645f57d1bff81bc083b2e44e459627af0615c51
                     message: "Login Successful",
                     data: {
                         user: patient,
@@ -145,19 +131,6 @@ module.exports.userSignupUsingOTP = async (req, res) => {
             last_name:lastName,
             mobileNumber:mobileNumber
         });
-<<<<<<< HEAD
-        await Cart.create({
-            patientId: newPatient._id,
-            products: [],
-            totalPrice: 0
-        });
-        const token = jsonwebtoken.sign(newPatient.toObject(),
-                process.env.SECRET,
-            {
-                expiresIn: 60 * 60 * 24
-            });
-=======
->>>>>>> 4645f57d1bff81bc083b2e44e459627af0615c51
 
         UserResponse(res).status(201).json({
             message: "Signup Successful",

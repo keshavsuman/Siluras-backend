@@ -1,13 +1,13 @@
 const express = require('express');
 const jsonwebtoken = require('jsonwebtoken');
 const adminRouter = express.Router();
-const authRoutes = require('./adminRoutes/authRoutes');
-const medicineRoutes = require('../routes/adminRoutes/medicineRoutes');
-const doctorRoutes = require('../routes/adminRoutes/doctorRoutes');
-const appointmentRoutes = require('../routes/adminRoutes/appointmentRoutes');
-const patientRoutes = require('../routes/adminRoutes/patientRoutes');
-const storeRoutes = require('../routes/adminRoutes/storeRoutes');
-const diagnosticRoutes = require('./adminRoutes/diagnosticsRoutes');
+const authRoutes = require('./adminRoutes/auth.routes');
+const medicineRoutes = require('../routes/adminRoutes/medicine.routes');
+const doctorRoutes = require('../routes/adminRoutes/doctor.routes');
+const appointmentRoutes = require('../routes/adminRoutes/appointment.routes');
+const patientRoutes = require('../routes/adminRoutes/patient.routes');
+const storeRoutes = require('../routes/adminRoutes/store.routes');
+const diagnosticRoutes = require('./adminRoutes/diagnostics.routes');
 const uploadRouter = require('./adminRoutes/uploadFile');
 
 adminRouter.use('/auth',authRoutes);

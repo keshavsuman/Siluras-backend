@@ -15,3 +15,4 @@ module.exports.Category = require('./store/categoryModel');
 module.exports.Order = require('./store/orderModel');
 module.exports.Subcategory = require('./store/subCategoryModel');
 module.exports.RazorpayOrderHistory = require('./store/razorpayOrderHistoryModel');
+module.exports.HealthArticle = require('./healthArticle.model');
