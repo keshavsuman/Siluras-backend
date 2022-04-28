@@ -2,9 +2,9 @@ const express = require('express');
 const {HealtArticleController} = require('../../controllers/adminControllers');
 const healthArticleRoutes = express.Router();
 
-// healthArticleRoutes.get('/',HealtArticleController.getDoctors);
-// healthArticleRoutes.post('/',HealtArticleController.getDoctors);
-// healthArticleRoutes.patch('/:id',HealtArticleController.getDoctors);
-// healthArticleRoutes.delete('/:id',HealtArticleController.getDoctors);
+healthArticleRoutes.get('/',HealtArticleController.getHealthArticles);
+healthArticleRoutes.post('/',HealtArticleController.createHealthArticle);
+healthArticleRoutes.patch('/:id',HealtArticleController.updateHealthArticlebyId);
+healthArticleRoutes.delete('/:id',HealtArticleController.deleteHealthArticleById);
 
 module.exports  = healthArticleRoutes;
