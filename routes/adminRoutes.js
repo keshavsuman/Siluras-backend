@@ -9,10 +9,12 @@ const patientRoutes = require('../routes/adminRoutes/patient.routes');
 const storeRoutes = require('../routes/adminRoutes/store.routes');
 const diagnosticRoutes = require('./adminRoutes/diagnostics.routes');
 const uploadRouter = require('./adminRoutes/uploadFile');
-const healthArticleRouter = require('./adminRoutes/healtharticle.route');
+const healthArticlesRoutes = require('./adminRoutes/healtharticle.route');
+const welcomeRouter = require('./adminRoutes/welcomeImage.route');
 
 adminRouter.use('/auth',authRoutes);
 adminRouter.use(adminAuth);
+adminRouter.use('/healthArticles',healthArticlesRoutes);
 adminRouter.use('/doctor',doctorRoutes);
 adminRouter.use('/appointment',appointmentRoutes);
 adminRouter.use('/patient',patientRoutes);
@@ -20,7 +22,7 @@ adminRouter.use('/medicine',medicineRoutes);
 adminRouter.use('/store',storeRoutes);
 adminRouter.use('/diagnostics',diagnosticRoutes);
 adminRouter.use('/uploadFileandGetURL',uploadRouter);
-adminRouter.use('/healthArticles',healthArticleRouter);
+adminRouter.use('/welcomeImage',welcomeRouter);
 
 function adminAuth(req,res,next){
     try {

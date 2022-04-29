@@ -7,7 +7,7 @@ async function getHealthArticles(req,res){
         const healtArticles = await HealthArticle.find({
             title:{
                 $regex:search,
-                $optons:'i'
+                $options:'i'
             }
         }).limit(limit).skip(skip);
 
@@ -24,7 +24,6 @@ async function getHealthArticles(req,res){
 async function createHealthArticle(req,res){
     try {
         const healthArticle = await HealthArticle.create(req.body);
-        console.log(healtArticle);
         AdminResponse(res).status(201).json({
             message:"Health article createrd successfully",
             data:healthArticle
@@ -38,7 +37,6 @@ async function createHealthArticle(req,res){
 async function updateHealthArticlebyId(req,res){
     try {
         const healtArticle = await HealthArticle.findByIdAndUpdate(req.params.id,req.body,{new:true});
-        console.log(healtArticle);
         AdminResponse(res).status(200).json({
             message:"HealthArticle updated successfully",
             data:healtArticle,
@@ -51,8 +49,7 @@ async function updateHealthArticlebyId(req,res){
 
 async function deleteHealthArticleById(req,res){
     try {
-        const healtArticle = await HealthArticle.findByIdAndUpdate(req.params.id,req.body,{new:true});
-        console.log(healtArticle);
+        const healtArticle = await HealthArticle.findByIdAndDelete(req.params.id);
         AdminResponse(res).status(200).json({
             message:"HealthArticle deleted successfully",
             data:healtArticle,
