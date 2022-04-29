@@ -135,7 +135,7 @@ module.exports.updateCategory = async (req,res) => {
 module.exports.deleteCategory = async (req,res) => {
     try {
         const category = await categoryModel.findByIdAndDelete(req.params.id);
-        const subCategory = await subCategoryModel.deleteMany({categoryId:req.params.id});
+        await subCategoryModel.deleteMany({categoryId:req.params.id});
 
         res.status(200).json({
             status:200,
