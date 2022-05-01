@@ -7,14 +7,14 @@ storeRoutes.post('/createAdvertisement',StoreController.createAdvertisement);
 storeRoutes.post('/updateAdvertisement/:id',StoreController.updateAdvertisement);
 storeRoutes.delete('/deleteAdvertisement/:id',StoreController.deleteAdvertisement);
 
-storeRoutes.post('/getCategories',StoreController.getCategories);
+storeRoutes.get('/getCategories',StoreController.getCategories);
 storeRoutes.post('/createCategory',StoreController.createCategory);
-storeRoutes.post('/updateCategory/:id',StoreController.updateCategory);
+storeRoutes.patch('/updateCategory/:id',StoreController.updateCategory);
 storeRoutes.delete('/deleteCategory/:id',StoreController.deleteCategory);
 
-storeRoutes.post('/getSubCategories::id',StoreController.getSubCategory);
+storeRoutes.get('/getSubCategories/:id',StoreController.getSubCategory);
 storeRoutes.post('/createSubCategory',StoreController.createSubCategroy);
-storeRoutes.post('/updateSubCategory/:id',StoreController.updateSubCategory);
+storeRoutes.patch('/updateSubCategory/:id',StoreController.updateSubCategory);
 storeRoutes.delete('/deleteSubCategory/:id',StoreController.deleteSubCategory);
 
 module.exports = storeRoutes;
