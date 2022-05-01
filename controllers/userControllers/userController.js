@@ -56,6 +56,7 @@ module.exports.getUser = async (req,res) =>{
         });
     }
 }
+
 module.exports.updateUser = async (req,res) =>{
     try {
         const user = await patientModel.findByIdAndUpdate(req.user._id,{
@@ -83,6 +84,7 @@ module.exports.updateUser = async (req,res) =>{
         });
     }
 }
+
 module.exports.contactUs = async (req,res) =>{
     try {
         const contactUs = await contactUsModel.create({

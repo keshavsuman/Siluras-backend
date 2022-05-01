@@ -24,9 +24,12 @@ module.exports.addMedicines = async (req,res)=>{
             name:req.body.name,
             description:req.body.description,
             quantity:req.body.quantity,
+            category:req.body.category,
+            subCategory:req.body.subCategory,
             price:req.body.price,
             inStock:req.body.inStock,
             image_url:req.body.image_url,
+            sellingFormat:req.body.sellingFormat
         });
         res.status(200).json({
             status:200,

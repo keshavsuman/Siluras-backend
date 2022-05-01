@@ -10,4 +10,5 @@ appointmentRoutes.post('/bookAppointment',AppointmentController.bookAppointment)
 appointmentRoutes.post('/addAppointment',AppointmentController.addAppointment);
 appointmentRoutes.post('/createHealthConcern',AppointmentController.createHealthConcern);
 appointmentRoutes.post('/getHealthConcerns',AppointmentController.getHealthConcern);
+appointmentRoutes.patch('/updateHealthConcern/:id',AppointmentController.updateHealthConcern);
 module.exports  = appointmentRoutes;
