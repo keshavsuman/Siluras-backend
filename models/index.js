@@ -17,3 +17,5 @@ module.exports.Subcategory = require('./store/subCategoryModel');
 module.exports.RazorpayOrderHistory = require('./store/razorpayOrderHistoryModel');
 module.exports.HealthArticle = require('./healthArticle.model');
 module.exports.WelcomeImage = require('./welcomeImageModel');
+module.exports.HealthCareService = require('./healthCareService.model');
+module.exports.HealthCareRequest = require('./healthCareRequest.model');

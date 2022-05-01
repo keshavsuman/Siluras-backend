@@ -2,9 +2,7 @@ const express = require('express');
 const healthCareController = require('../../controllers/userControllers/healthCare.controller');
 const homeCareRoutes = express.Router();
 
-homeCareRoutes.get('/',appointmentController.getAppointmentConfig);
-homeCareRoutes.post('/',appointmentController.getAppointmentConfig);
-homeCareRoutes.delete('/',appointmentController.getAppointmentConfig);
-homeCareRoutes.patch('/',appointmentController.getAppointmentConfig);
+homeCareRoutes.post('/',healthCareController.createHealthCare);
+homeCareRoutes.get('/getServices',healthCareController.fetchServices);
 
 module.exports = homeCareRoutes;
