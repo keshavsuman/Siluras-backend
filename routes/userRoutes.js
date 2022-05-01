@@ -7,6 +7,7 @@ const storeRoutes = require('./userRoutes/store.routes');
 const medicalRoutes = require('./userRoutes/medicalRecords');
 const diagnosticsRoutes = require('./userRoutes/diagnostics.routes');
 const userController = require('../controllers/userControllers/userController');
+const homeCareRoutes = require('./userRoutes/homeCare.routes');
 const jsonwebtoken = require('jsonwebtoken');
 
 userRouter.use('/auth',authRoutes);
@@ -16,6 +17,7 @@ userRouter.use('/appointment',appointmentRoutes);
 userRouter.use('/store',storeRoutes);
 userRouter.use('/medicalRecords',medicalRoutes);
 userRouter.use('/diagnostics',diagnosticsRoutes);
+userRoutes.use('/homeCare',homeCareRoutes);
 userRouter.get('/notifications',userController.getNotifications);
 userRouter.get('/visits',userController.getVisits);
 userRouter.get('/',userController.getUser);
@@ -23,7 +25,6 @@ userRouter.post('/updateUser',userController.updateUser);
 userRouter.post('/contactUs',userController.contactUs);
 userRouter.get('/welcomeImage',userController.getWelcomeImage);
 userRouter.get('/getSpotlight',userController.getSpotlight);
-
 function patientAuth(req,res,next){
     try {
         const data = jsonwebtoken.verify(req.headers.authorization.split(" ").pop(),process.env.SECRET);
