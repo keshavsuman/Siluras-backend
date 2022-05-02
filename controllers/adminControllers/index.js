@@ -7,3 +7,4 @@ module.exports.PatientController = require('./patient.controller');
 module.exports.StoreController = require('./store.controller');
 module.exports.DoctorController = require('./doctor.controller');
 module.exports.WelcomeController = require('./welcomeImage.controller');
+module.exports.HealthCareController = require('./healthcare.controller');

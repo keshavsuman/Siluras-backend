@@ -6,6 +6,7 @@ const appointmentRoutes = require('./userRoutes/appointment.routes');
 const storeRoutes = require('./userRoutes/store.routes');
 const medicalRoutes = require('./userRoutes/medicalRecords');
 const diagnosticsRoutes = require('./userRoutes/diagnostics.routes');
+const healthCareRoutes = require('./userRoutes/homeCare.routes');
 const userController = require('../controllers/userControllers/userController');
 const homeCareRoutes = require('./userRoutes/homeCare.routes');
 const jsonwebtoken = require('jsonwebtoken');
