@@ -108,7 +108,7 @@ module.exports.createHealthConcern = async (req,res)=>{
         const concerns = await healthConcernModel.create({
             name:req.body.name,
             description:req.body.description,
-            image:req.body.imagePath,
+            imagePath:req.body.imagePath,
         });
         res.status(201).json({
             status:201,
@@ -126,10 +126,7 @@ module.exports.createHealthConcern = async (req,res)=>{
 
 module.exports.getHealthConcern = async (req,res)=>{
     try{
-        const concerns = await healthConcernModel.create({
-            name:req.body.name,
-            imagePath:req.body.imagePath,
-        });
+        const concerns = await healthConcernModel.find();
         res.status(200).json({
             status:200,
             message:'Health Service fetched Successfully',
@@ -149,7 +146,7 @@ module.exports.updateHealthConcern = async (req,res)=>{
         const concerns = await healthConcernModel.findByIdAndUpdate(req.params.id,{
             name:req.body.name,
             description:req.body.description,
-            image:req.body.imagePath,
+            imagePath:req.body.imagePath,
         });
         res.status(200).json({
             status:200,
