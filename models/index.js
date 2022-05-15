@@ -19,3 +19,4 @@ module.exports.HealthArticle = require('./healthArticle.model');
 module.exports.WelcomeImage = require('./welcomeImageModel');
 module.exports.HealthCareService = require('./healthCareService.model');
 module.exports.HealthCareRequest = require('./healthCareRequest.model');
+module.exports.AmbulanceBooking = require('./ambulanceBooking.model');

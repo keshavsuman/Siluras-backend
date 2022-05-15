@@ -7,7 +7,7 @@ const healthConcernSchema = mongoose.Schema({
     description:{
         type:String
     },
-    imagePath:{
+    image:{
         type:String
     }
 });

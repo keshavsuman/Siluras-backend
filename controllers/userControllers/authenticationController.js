@@ -184,18 +184,19 @@ module.exports.verifyOTP = async (req, res) => {
             {
                 await OTP.findByIdAndDelete(data[0]._id);
                 res.status(206).json({
-                    statu: 206,
+                    status: 206,
                     message: "OTP expired",
                 });
             }
             if (otp == savedOTP) {
+                await OTP.findByIdAndDelete(data[0]._id);
                 res.status(200).json({
-                    statu: 200,
+                    status: 200,
                     message: "OTP verified",
                 });
             } else {
                 res.status(403).json({
-                    statu: 403,
+                    status: 403,
                     message: "OTP doesn't match",
                 });
             }
