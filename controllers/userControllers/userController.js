@@ -1,4 +1,3 @@
-const notificationModel = require('../../models/notificationModel');
 const patientModel = require('../../models/patientModel');
 const prescriptionModel = require('../../models/prescriptionModel');
 const testsModel = require('../../models/testsModel');
@@ -7,10 +6,17 @@ const medicalRecordModel = require('../../models/medicalRecordModel');
 const bookingModel = require('../../models/appointmentBookings');
 const spotlightModel = require('../../models/spotlightModel');
 const welcomeImageModel = require('../../models/welcomeImageModel');
-
+const {Notification} =require('../../models');
+const UserResponse = require('../../helpers/userResponse');
 module.exports.getNotifications = async (req,res) =>{
     try {
-        
+        const notifications = await Notification.find({
+            user:req.user._id
+        });
+        UserResponse(res).status(200).json({
+            data:notifications,
+            message:"Notifications fetched successfully",
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -71,7 +77,7 @@ module.exports.updateUser = async (req,res) =>{
             bloodGroup:req.body.bloodGroup,
             maritalStatus:req.body.maritalStatus
         },{new:true});
-        res.status(201).json({
+        res.status(200).json({
             status:200,
             message:"User Updated successfully",
             data:user
