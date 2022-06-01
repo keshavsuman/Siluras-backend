@@ -12,7 +12,7 @@ module.exports.login = async (req,res)=>{
                 admin.updatedAt = undefined;
                 admin.__v = undefined;
                 const token = jsonwebtoken.sign(admin.toObject(),
-                'Hello world',
+                process.env.SECRET,
                 {
                     expiresIn: 60 * 60 * 24
                 });
@@ -63,18 +63,18 @@ module.exports.signup = async (req,res)=>{
             var salt = await bcrypt.genSalt();
             var encryptedPassword = await bcrypt.hash(password, salt);
 
-            const newAdmin = new adminModel({
+            const newDoctor = new doctorModel({
                 email:email,
                 password:encryptedPassword,
                 first_name:firstName,
                 last_name:lastName
             });
-            await newAdmin.save();
+            await newDoctor.save();
             
             res.status(200).json({
                 status:200,
-                message:"Admin signup Successful",
-                data:newAdmin
+                message:"Doctor signup Successful",
+                data:newDoctor
             });
         }
     } catch (error) {

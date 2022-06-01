@@ -10,7 +10,7 @@ doctorRouter.use('/auth',authRoutes);
 doctorRouter.use(doctorAuth);
 doctorRouter.use('/appointment',appointmentRoutes);
 doctorRouter.use('/patient',patientRoutes);
-doctorRouter.post('/notifications',doctorController.getNotifications);
+doctorRouter.get('/notifications',doctorController.getNotifications);
 doctorRouter.get('/',doctorController.getDoctor);
 doctorRouter.post('/updateDoctor',doctorController.updateDoctor);
 doctorRouter.post('/updateFirebaseToken',doctorController.updateFirebaseToken);

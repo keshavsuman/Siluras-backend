@@ -20,14 +20,13 @@ module.exports.getDoctor = async (req,res)=>{
 
 module.exports.getNotifications = async (req,res)=>{
     try {
-        const {select,project,skip,limit} = req.body;
+        const {skip,limit} = req.query;
         const notifications = await notificationModel.find(
             {   
-                ...select,
                 user_id:req.user._id
             },
-            project
-            ).skip(0).limit(20);
+            ).skip(skip??0).limit(limit??20);
+            
         res.status(200).json({
             status:200,
             message:"Notifications fetched successfully",
@@ -79,7 +78,7 @@ module.exports.updateFirebaseToken = async (req,res) =>{
         },{
             new:true
         });
-        res.stastu(200).json({
+        res.status(200).json({
             status:200,
             message:"Firebase Token updated successfully",
             data:doctor
