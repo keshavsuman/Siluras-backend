@@ -2,13 +2,13 @@ const appointmentBookingModel = require('../../models/appointmentBookings');
 
 module.exports.getAppointments = async (req, res) => {
     try {
-        const {select,project,skip,limit} = req.body;
+        const {page,limit} = req.query;
         const appointments = await appointmentBookingModel.find({
             doctorId:req.user._id,
             timeSlot:{
                 $gte:new Date()
-            },
-            ...select},project).skip(skip??0).limit(limit??10).populate('doctorId').populate('patientId');
+            }
+        }).skip((page-1)*limit).limit(limit??10).populate('doctorId').populate('patientId');
         res.status(200).json({
             status:200,
             message: "Appointments fetched successfully",

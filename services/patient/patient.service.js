@@ -48,6 +48,12 @@ async function initializePatient(patient){
     });
 }
 
+/**
+ * @description Generates the token for the given patient
+ * @param {*} patient 
+ * @returns 
+ * @author keshav suman
+ */
 function generateToken(patient){
     return jsonwebtoken.sign(patient.toObject(),
         process.env.SECRET,
@@ -56,11 +62,24 @@ function generateToken(patient){
     });
 }
 
+/**
+ * @description Generate the hash for the given password
+ * @param {*} password 
+ * @returns 
+ * @author keshav suman
+ */
 async function hashPassword(password){
     var salt = await bcrypt.genSalt();
     return await bcrypt.hash(password, salt);
 }
 
+/**
+ * @description Compare the given password with the hash
+ * @param {*} password 
+ * @param {*} passwordToVerify 
+ * @returns {Boolean}
+ * @author keshav suman
+ */
 function verifyPassword(password,passwordToVerify){
     return bcrypt.compareSync(password, passwordToVerify);
 }

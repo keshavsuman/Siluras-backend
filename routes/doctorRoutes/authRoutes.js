@@ -1,11 +1,9 @@
 const express = require("express");
-const authenticationController = require("../../controllers/doctorControllers/authenticationController");
+const authenticationController = require("../../controllers/doctorControllers/authentication.controller");
 const authRoutes = express.Router();
 
 authRoutes.post('/login',authenticationController.login);
 authRoutes.post('/signup',authenticationController.signup);
-authRoutes.post('/loginUsingMobileNumber',authenticationController.loginUsingMobileNumber);
-authRoutes.post('/singupUsingMobileNumber',authenticationController.signupUsingMobileNumber);
-authRoutes.post('/isDoctorExitWithMobileNumber',authenticationController.isDoctorExitWithMobileNumber);
-
+authRoutes.post('/forgot-password',authenticationController.forgetPassword);
+authRoutes.post('/reset-password',authenticationController.resetPassword);
 module.exports = authRoutes;

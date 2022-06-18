@@ -8,9 +8,9 @@ module.exports.getRecentPatients = async (req, res) => {
             [   
                 {
                     $match:{
-                        doctorId:mongoose.Types.ObjectId(req.user._id)
+                        doctorId:mongoose.Types.ObjectId(req.user.id)
                     }
-            },
+                },
                 {
                   '$lookup': {
                     'from': 'patients', 
@@ -47,8 +47,8 @@ module.exports.getRecentPatients = async (req, res) => {
         ]);
         res.status(200).json({
             status: 200,
-            message: "Recent patients fetched successfully",
-            data: patients[0].patients
+            message: "Recent patients retrived successfully",
+            data: patients?.first?.patients??[]
         });        
     } catch (error) {
         console.log(error);

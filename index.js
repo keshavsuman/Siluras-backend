@@ -25,13 +25,16 @@ const io = new Server(httpServer,{
 });
 
 const client = io.of('/call');
-client.use(async (socket,next)=>{
-    // const user = jsonwebtoken.verify(socket.handshake.auth.token,'Hello world');
-    // socket.user = user;
-    next();
-}).on("connection",(socket)=>{
+
+// client.use(async (socket,next)=>{
+//     const user = jsonwebtoken.verify(socket.handshake.auth.token,process.env.SECRET);
+//     socket.user = user;
+//     next();
+// })
+
+client.on("connection",(socket)=>{
     console.log("socket connected");
-    MemCache.hset(socket.user._id,socket.id);
+    // MemCache.hset(socket.user._id,socket.id);
     const socketEvents = new SocketEvents();
     socketEvents.init(client,socket);
 });

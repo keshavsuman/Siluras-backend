@@ -1,9 +1,11 @@
 const Agora = require('./agora');
 const uuid = require('uuid4');
 const MemCache = require('./memcache');
+const jsonwebtoken = require('jsonwebtoken');
+
 class SocketEvents {
     
-     agora = new Agora();
+    //  agora = new Agora();
      nsp;
      socket;
 
@@ -14,6 +16,7 @@ class SocketEvents {
     }
 
     listenEvents() {
+        this.login();
         this.connectCall();
         this.acceptCall();
         this.rejectCall();
@@ -38,6 +41,20 @@ class SocketEvents {
         })
     }
 
+    /**
+     * @description Login with token to link socketId with userId
+     */
+    login(){
+        this.socket.on('login',async (data)=>{
+            const {token} = data;
+            const user = jsonwebtoken.verify(token,process.env.SECRET);
+            MemCache.hset(user._id,this.socket.id);
+            this.socket.emit('login',{
+                user:user,
+                message:"Success"
+            })
+        })
+    }
 
     /**
      * @param id // other user id
@@ -48,8 +65,8 @@ class SocketEvents {
 
      acceptCall() {
         this.socket.on("acceptCall", async (data) => {
-            const me = this.socket.user.id;
-            data.otherUserId = me;
+            // const me = this.socket.user.id;
+            // data.otherUserId = me;
             console.log(data);
             this.socket.emit('acceptCall',data);
             const recSocket = MemCache.hget(process.env.CHAT_SOCKET, `${data.id}`);
@@ -65,7 +82,7 @@ class SocketEvents {
     */
      rejectCall() {
         this.socket.on("rejectCall", async (data) => {
-            const me = this.socket.user.id;
+            // const me = this.socket.user.id;
             const recSocket = MemCache.hget(process.env.CHAT_SOCKET, `${data.id}`);
             if (recSocket) {
                 const res = { msg: "call disconnected" };
@@ -76,10 +93,25 @@ class SocketEvents {
 
     onCallRequest(){
         this.socket.on("requestCall", async (data) => {
-            data['patient']['_id'] = this.socket.user._id;
+            console.log(data);
+            data['patient']['_id'] = data.remoteId;
             this.socket.emit('onCallRequest',data);
         });
     }
+    /**
+     * @description send Message to another user with socketId
+     * @param id // other user id
+     * @param message 
+     */
+    sendMessage() {
+        this.socket.on('message',async (data)=>{
+
+        });
+    }
+
+    /**
+     * 
+     */
 
 }
 

@@ -72,11 +72,18 @@ module.exports.bookAppointment = async (req,res)=>{
 
 module.exports.getHealthConcerns = async (req,res)=>{
     try{
-        const {select,project,skip,limit} = req.body; 
-        const concerns = await healthConcernModel.find(select,project).limit(limit??20).skip(skip??0);
+        const {skip,limit} = req.query; 
+        const project = {
+            id:"$_id",
+            _id:0,
+            name:1,
+            description:1,
+            imagePath:1,
+        }
+        const concerns = await healthConcernModel.find({},project).limit(limit??20).skip(skip??0);
         res.status(200).json({
             status:200,
-            message:'Health Service fetched Successfully',
+            message:'Health Service retrived successfully',
             data:concerns
         });
     }catch(error){
@@ -90,10 +97,17 @@ module.exports.getHealthConcerns = async (req,res)=>{
 
 module.exports.getDoctors = async (req,res)=>{
     try {
-        const doctors = await doctorModel.find();
+        const project = {
+            _id:0,
+            id:"$_id",
+            first_name:1,
+            last_name:1,
+            email:1,
+        }
+        const doctors = await doctorModel.find({},project);
         res.status(200).json({
             status:200,
-            message:'Doctors fetched Successfully',
+            message:'Doctors fetched Successfully', 
             data:doctors
         });
     } catch (error) {

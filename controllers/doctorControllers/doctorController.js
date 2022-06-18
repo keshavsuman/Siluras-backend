@@ -1,9 +1,10 @@
 const doctorModel  = require("../../models/doctorModel");
 const notificationModel = require("../../models/notificationModel");
+const { doctorService } = require("../../services");
 
 module.exports.getDoctor = async (req,res)=>{
     try {
-        const doctor = await doctorModel.findById(req.user._id);
+        const doctor = await doctorService.getDoctorById(req.user._id);
         res.status(200).json({
             status:200,
             message:"Doctor fetched successfully",
@@ -20,6 +21,7 @@ module.exports.getDoctor = async (req,res)=>{
 
 module.exports.getNotifications = async (req,res)=>{
     try {
+        console.log(req.user);
         const {skip,limit} = req.query;
         const notifications = await notificationModel.find(
             {   
