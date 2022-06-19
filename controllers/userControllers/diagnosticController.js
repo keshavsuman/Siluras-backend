@@ -3,8 +3,19 @@ const DiagnosticsTestsModel = require('../../models/diagnostics/diagnosticTests'
 
 module.exports.getNearByDiagnostics = async (req,res)=>{
     try {
-        const {select,project,limit,skip} = req.body;
-        const diagnosticsCenters = await DiagnosticsCenterModel.find(select,project).limit(limit??20).skip(skip??0);
+        const {longitude,latitude,limit,skip} = req.query;
+        const project = {
+            _id:0,
+            'id':'$_id',
+            'name':1,
+            'address':1,
+            'longitude':1,
+            'mobile':1,
+            'email':1,
+            'image_url':1,
+        }
+        const diagnosticsCenters = await DiagnosticsCenterModel.find({},project).limit(limit??20).skip(skip??0);
+        console.log("Fetching consoles");
         res.status(200).json({
             status:200,
             message:'NearByDiagnostics fetched Successfully',
@@ -21,8 +32,16 @@ module.exports.getNearByDiagnostics = async (req,res)=>{
 
 module.exports.getTests = async (req,res)=>{
     try {
-        const {select,project,limit,skip} = req.body;
-        const diagnosticsTests = await DiagnosticsTestsModel.find(select,project).limit(limit??20).skip(skip??0);
+        const {id:diagnosticId} = req.params;
+        const {limit,skip} = req.query;
+        const project = {
+            _id:0,
+            'id':'$_id',
+             'name':1,   
+        }
+        const diagnosticsTests = await DiagnosticsTestsModel.find({
+            'diagnosticCenterId':diagnosticId
+        },project).limit(limit??20).skip(skip??0);
         res.status(200).json({
             status:200,
             message:'Diagnostics tests fetched Successfully',

@@ -107,11 +107,7 @@ class SocketEvents {
         this.socket.on('message',async (data)=>{
 
         });
-    }
-
-    /**
-     * 
-     */
+    } 
 
 }
 

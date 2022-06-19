@@ -3,7 +3,7 @@ const diagnosticController = require('../../controllers/userControllers/diagnost
 
 const diagnosticRoutes = express.Router();
 
-diagnosticRoutes.post('/getNearByDiagnostics',diagnosticController.getNearByDiagnostics);
-diagnosticRoutes.post('/:id/getTests',diagnosticController.getTests);
+diagnosticRoutes.get('/getNearByDiagnostics',diagnosticController.getNearByDiagnostics);
+diagnosticRoutes.get('/:id/getTests',diagnosticController.getTests);
 
 module.exports = diagnosticRoutes;

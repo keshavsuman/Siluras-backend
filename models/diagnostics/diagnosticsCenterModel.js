@@ -18,8 +18,16 @@ const diagnosticsCenterSchema = mongoose.Schema({
     password:{
         type:String
     },
-    location:{
-        
+    location: {
+        type: {
+          type: String,
+          enum: ['Point']
+        },
+        // GeoJSON Points
+        coordinates: {
+          type: [Number],
+          index: '2dsphere'
+        }
     },
     image_url:{
         type:String

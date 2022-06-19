@@ -20,3 +20,5 @@ module.exports.WelcomeImage = require('./welcomeImageModel');
 module.exports.HealthCareService = require('./healthCareService.model');
 module.exports.HealthCareRequest = require('./healthCareRequest.model');
 module.exports.AmbulanceBooking = require('./ambulanceBooking.model');
+module.exports.DiagnosticCenter = require('./diagnostics/diagnosticsCenterModel');
+module.exports.DiagnosticTest = require('./diagnostics/diagnosticTests');
