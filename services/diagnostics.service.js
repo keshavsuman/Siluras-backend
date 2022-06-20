@@ -1,4 +1,4 @@
-const {Diag}
+const {DiagnosticCenter,DiagnosticTest } = require('../models');
 /**
  * @description Get Diagnostic Centers
  * @param {String} search
@@ -11,5 +11,12 @@ const {Diag}
  */
 
 module.exports.getDiagnostics = async (search, page, limit, latitude, longitude) => {
-
+    const project = {};
+    const diagnosticCenters = await DiagnosticCenter.aggregate([
+        {
+            $match: {
+                $regex:{name:search,$options:'i'},
+            }
+        }
+    ]);
 }
