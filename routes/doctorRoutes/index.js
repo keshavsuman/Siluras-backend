@@ -1,12 +1,12 @@
 const express = require('express');
 const jsonwebtoken = require('jsonwebtoken');
 
-const authRoutes = require('./doctorRoutes/authRoutes');
-const doctorController = require('../controllers/doctorControllers/doctorController');
-const appointmentRoutes = require('./doctorRoutes/appointmentRoutes');
-const patientRoutes = require('../routes/doctorRoutes/patientRoutes');
-const {isDoctorKycVerified} = require('../helpers/kyc.helper');
-const {Doctor} = require('../models');
+const authRoutes = require('./authRoutes');
+const doctorController = require('../../controllers/doctorControllers/doctor.controller');
+const appointmentRoutes = require('./appointmentRoutes');
+const patientRoutes = require('./patientRoutes');
+const {isDoctorKycVerified} = require('../../helpers/kyc.helper');
+const {Doctor} = require('../../models');
 
 const doctorRouter = express.Router();
 

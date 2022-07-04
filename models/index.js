@@ -1,6 +1,7 @@
 module.exports.Patient = require('./patientModel');
 module.exports.Doctor = require('./doctorModel');
 module.exports.Admin = require('./adminModel');
+module.exports.Appointment = require('./appointmentBookings');
 module.exports.Medicine = require('./store/medicineModel');
 module.exports.Invoice = require('./invoiceModel');
 module.exports.MedicalRecord = require('./medicalRecordModel');
@@ -22,3 +23,5 @@ module.exports.HealthCareRequest = require('./healthCareRequest.model');
 module.exports.AmbulanceBooking = require('./ambulanceBooking.model');
 module.exports.DiagnosticCenter = require('./diagnostics/diagnosticsCenterModel');
 module.exports.DiagnosticTest = require('./diagnostics/diagnosticTests');
+module.exports.HealthConcern = require('./healthConcern.model');
+module.exports.MessageModel = require('./message.model');

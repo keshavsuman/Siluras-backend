@@ -1,5 +1,5 @@
 const {Patient,OTP,Cart} = require('../../models');
-const {PatientService} = require('../../services/patient');
+const {PatientService} = require('../../services');
 const UserResponse = require('../../helpers/userResponse');
 
 const axios = require("axios");

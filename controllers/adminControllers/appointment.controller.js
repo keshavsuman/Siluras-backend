@@ -1,5 +1,5 @@
 const appointmentBookings = require('../../models/appointmentBookings');
-const healthConcernModel = require('../../models/healthConcernModel');
+const healthConcernModel = require('../../models/healthConcern.model');
 
 // module.exports.getAppointments = async (req,res)=>{
 //     try {

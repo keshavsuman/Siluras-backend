@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const patientController = require('../../controllers/doctorControllers/patientController');
+const patientController = require('../../controllers/doctorControllers/patient.controller');
 
 router.get('/getRecentPatients',patientController.getRecentPatients);
 router.post('/prescribe/:id',patientController.prescribe);

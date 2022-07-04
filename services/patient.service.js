@@ -1,9 +1,14 @@
-const {Patient, Cart}  = require('../../models');
+const {Patient, Cart}  = require('../models');
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
 
 
-
+/**
+ * @description Create a patient
+ * @param {any} param0 
+ * @returns {Promise<Patient>}
+ * @author keshav suman
+ */
 async function createPatient({
     first_name,
     last_name,
@@ -28,18 +33,41 @@ async function createPatient({
     return patient;
 }
 
+/**
+ * @description get the patient by email address
+ * @param {String} email 
+ * @returns {Promise<Patient>}
+ * @author keshav suman
+ */
 async function getPatientUsingEmail(email){
     return await Patient.findOne({email:email});
 }
 
+/**
+ * @description get the patient using mobile Number
+ * @param {String} mobileNumber 
+ * @returns {Promise<Patient>}
+ * @author keshav suman
+ */
 async function getPatientUsingNumber(mobileNumber){
     return await Patient.findOne({'mobileNumber':mobileNumber});
 }
 
+/**
+ * @description get the patient using the Id
+ * @param {String} id 
+ * @returns {Promise<String>}
+ * @author keshav suman
+ */
 async function getPatientUsingId(id){
     return await Patient.findById(id);
 }
-
+/**
+ * @description initialize the patient with the default cart
+ * @param {Patient} patient 
+ * @returns {Promise<Cart>}
+ * @author keshav suman
+ */
 async function initializePatient(patient){
     await Cart.create({
         patientId: patient._id,
@@ -58,7 +86,7 @@ function generateToken(patient){
     return jsonwebtoken.sign(patient.toObject(),
         process.env.SECRET,
         {
-            expiresIn: 60 * 60 * 24
+            expiresIn: 60 * 60 * 24 * 30 * 365
     });
 }
 

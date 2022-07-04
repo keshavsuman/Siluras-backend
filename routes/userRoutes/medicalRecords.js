@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-const userController  = require('../../controllers/userControllers/userController');
+const userController  = require('../../controllers/userControllers/user.controller');
 
 
 const multerS3  = require('multer-s3');

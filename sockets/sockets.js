@@ -4,10 +4,9 @@ const MemCache = require('./memcache');
 const jsonwebtoken = require('jsonwebtoken');
 
 class SocketEvents {
-    
-    //  agora = new Agora();
-     nsp;
-     socket;
+
+    nsp;
+    socket;
 
     init(nsp, socket) {
         this.nsp = nsp;
@@ -79,6 +78,7 @@ class SocketEvents {
     /**
      * @param id // other user id
      * use to reject call
+     * @author keshav suman
     */
      rejectCall() {
         this.socket.on("rejectCall", async (data) => {
@@ -100,8 +100,7 @@ class SocketEvents {
     }
     /**
      * @description send Message to another user with socketId
-     * @param id // other user id
-     * @param message 
+     * @author keshav suman
      */
     sendMessage() {
         this.socket.on('message',async (data)=>{
@@ -109,6 +108,15 @@ class SocketEvents {
         });
     } 
 
+    /**
+     * @description get messages on the basis of userId
+     * @author keshav suman
+     */
+    getMessages(){
+        this.socket.on('getMessages',async (data)=>{
+            
+        });
+    }
 }
 
 module.exports = SocketEvents;

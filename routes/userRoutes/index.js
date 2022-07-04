@@ -1,14 +1,14 @@
 const express = require('express');
 const userRouter = express.Router();
-const authRoutes = require('./userRoutes/auth.routes');
-const healthArticleRoutes = require('./userRoutes/healthArticle.routes');
-const appointmentRoutes = require('./userRoutes/appointment.routes');
-const storeRoutes = require('./userRoutes/store.routes');
-const medicalRoutes = require('./userRoutes/medicalRecords');
-const diagnosticsRoutes = require('./userRoutes/diagnostics.routes');
-const healthCareRoutes = require('./userRoutes/homeCare.routes');
-const ambulanceRoutes = require('./userRoutes/ambulance.routes');
-const userController = require('../controllers/userControllers/userController');
+const authRoutes = require('./auth.routes');
+const healthArticleRoutes = require('./healthArticle.routes');
+const appointmentRoutes = require('./appointment.routes');
+const storeRoutes = require('./store.routes');
+const medicalRoutes = require('./medicalRecords');
+const diagnosticsRoutes = require('./diagnostics.routes');
+const healthCareRoutes = require('./homeCare.routes');
+const ambulanceRoutes = require('./ambulance.routes');
+const userController = require('../../controllers/userControllers/user.controller');
 const jsonwebtoken = require('jsonwebtoken');
 
 userRouter.use('/auth',authRoutes);

@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const appointmentBookingSchema = mongoose.Schema({
-    appointmentId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'appointment'
-    },
     bookingId:{
         type:Number,
     },
@@ -30,7 +26,8 @@ const appointmentBookingSchema = mongoose.Schema({
     },
     status:{
         type:String,
-        default:'ACTIVE'
+        default:'ACTIVE',
+        enum:['ACTIVE','CANCELLED','COMPLETED']
     }
 },{
     timestamps:true

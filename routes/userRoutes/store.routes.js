@@ -1,5 +1,5 @@
 const express = require('express');
-const storeController = require('../../controllers/userControllers/storeController');
+const storeController = require('../../controllers/userControllers/store.controller');
 const storeRoutes = express.Router();
 
 storeRoutes.post('/getMedicines',storeController.getMedicines);

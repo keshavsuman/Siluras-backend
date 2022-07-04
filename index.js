@@ -6,9 +6,9 @@ const routes = require('./routes/index');
 const {Server} = require('socket.io');
 const {createServer} = require('http');
 const SocketEvents = require('./sockets/sockets');
-const MemCache = require('./sockets/memcache');
-const jsonwebtoken = require('jsonwebtoken');
+// const MemCache = require('./sockets/memcache');
 const dotenv = require('dotenv');
+const logger = require('express-requests-logger');
 dotenv.config();
 
 app.use(cors());
@@ -16,7 +16,7 @@ app.use(express.json());
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true },()=>{
     console.log("Database connected");
 });
-
+app.use(logger());
 app.use('/api',routes);
 
 const httpServer = createServer(app);

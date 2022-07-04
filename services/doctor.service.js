@@ -1,4 +1,4 @@
-const {Doctor} =require('../models');
+const {Doctor} = require('../models');
 
 /**
  * @Description Get the doctor by doctor id

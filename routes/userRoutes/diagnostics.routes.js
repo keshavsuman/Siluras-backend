@@ -1,5 +1,5 @@
 const express = require('express');
-const diagnosticController = require('../../controllers/userControllers/diagnosticController');
+const diagnosticController = require('../../controllers/userControllers/diagnostic.controller');
 
 const diagnosticRoutes = express.Router();
 

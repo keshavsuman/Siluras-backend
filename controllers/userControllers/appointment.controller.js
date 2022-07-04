@@ -1,8 +1,8 @@
-const healthConcernModel = require('../../models/healthConcernModel');
+const healthConcernModel = require('../../models/healthConcern.model');
 const appointmentBookingModel = require('../../models/appointmentBookings');
 const doctorModel = require('../../models/doctorModel');
 const appointmentConfig = require('../../configs/appointmentConfigs');
-
+const {HealthConcernService} = require('../../services');
 module.exports.getMyAppointments = async (req,res)=>{
     try {
         const past = await appointmentBookingModel.find({
@@ -72,15 +72,8 @@ module.exports.bookAppointment = async (req,res)=>{
 
 module.exports.getHealthConcerns = async (req,res)=>{
     try{
-        const {skip,limit} = req.query; 
-        const project = {
-            id:"$_id",
-            _id:0,
-            name:1,
-            description:1,
-            imagePath:1,
-        }
-        const concerns = await healthConcernModel.find({},project).limit(limit??20).skip(skip??0);
+        const {page,limit} = req.query; 
+        const concerns = await HealthConcernService.getHealthConcerns(page,limit);
         res.status(200).json({
             status:200,
             message:'Health Service retrived successfully',
