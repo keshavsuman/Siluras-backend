@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const medicalRecordSchema = new mongoose.Schema({
     patientId: {
         type: mongoose.Schema.Types.ObjectId,

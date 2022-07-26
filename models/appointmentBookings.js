@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const appointmentBookingSchema = mongoose.Schema({
+const appointmentBookingSchema = new mongoose.Schema({
     bookingId:{
         type:Number,
     },
@@ -12,11 +12,11 @@ const appointmentBookingSchema = mongoose.Schema({
         type:Date,
         required:true
     },
-    patientId:{
+    patient:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'patient'
     },
-    doctorId:{
+    doctor:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'doctor'
     },
@@ -33,4 +33,12 @@ const appointmentBookingSchema = mongoose.Schema({
     timestamps:true
 });
 
-    module.exports =  mongoose.model('appointmentBookings',appointmentBookingSchema);
+appointmentBookingSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    }
+}); 
+
+module.exports =  mongoose.model('appointmentBookings',appointmentBookingSchema);

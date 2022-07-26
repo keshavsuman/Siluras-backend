@@ -16,7 +16,7 @@ app.use(express.json());
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true },()=>{
     console.log("Database connected");
 });
-app.use(logger());
+// app.use(logger());
 app.use('/api',routes);
 
 const httpServer = createServer(app);

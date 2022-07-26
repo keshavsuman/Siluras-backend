@@ -1,10 +1,14 @@
 const express = require('express');
 const {HealtArticleController} = require('../../controllers/adminControllers');
+
 const healthArticleRoutes = express.Router();
 
-healthArticleRoutes.get('/',HealtArticleController.getHealthArticles);
-healthArticleRoutes.post('/',HealtArticleController.createHealthArticle);
-healthArticleRoutes.patch('/:id',HealtArticleController.updateHealthArticlebyId);
-healthArticleRoutes.delete('/:id',HealtArticleController.deleteHealthArticleById);
+healthArticleRoutes.route('/')
+    .get(HealtArticleController.getHealthArticles)
+    .post(HealtArticleController.createHealthArticle);
+
+healthArticleRoutes.route('/:id')
+    .patch(HealtArticleController.updateHealthArticlebyId)
+    .delete(HealtArticleController.deleteHealthArticleById);
 
 module.exports  = healthArticleRoutes;

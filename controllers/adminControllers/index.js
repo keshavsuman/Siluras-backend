@@ -8,3 +8,4 @@ module.exports.StoreController = require('./store.controller');
 module.exports.DoctorController = require('./doctor.controller');
 module.exports.WelcomeController = require('./welcomeImage.controller');
 module.exports.HealthCareController = require('./healthcare.controller');
+module.exports.SpotlightController = require('./spotlight.controller');

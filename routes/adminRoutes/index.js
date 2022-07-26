@@ -11,6 +11,7 @@ const diagnosticRoutes = require('./diagnostics.routes');
 const uploadRouter = require('./uploadFile');
 const healthArticlesRoutes = require('./healtharticle.route');
 const welcomeRouter = require('./welcomeImage.route');
+const spotlightRouter = require('./spotlight.routes');
 
 const adminRouter = express.Router();
 
@@ -25,8 +26,9 @@ adminRouter.use('/store',storeRoutes);
 adminRouter.use('/diagnostics',diagnosticRoutes);
 adminRouter.use('/uploadFileandGetURL',uploadRouter);
 adminRouter.use('/welcomeImage',welcomeRouter);
+adminRouter.use('/spotlight',spotlightRouter);
 
-function adminAuth(req,res,next){
+function adminAuth(req,res,next) {
     try {
         const data = jsonwebtoken.verify(req.headers.authorization.split(" ").pop(),process.env.SECRET);
         req.user = data;
@@ -39,4 +41,5 @@ function adminAuth(req,res,next){
         });
     }
 }
+
 module.exports = adminRouter;

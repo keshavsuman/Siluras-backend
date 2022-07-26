@@ -2,7 +2,7 @@ const express = require('express');
 const {AppointmentController} = require('../../controllers/adminControllers');
 const appointmentRoutes = express.Router();
 
-// appointmentRoutes.post('/getAppointments',AppointmentController.getAppointments);
+appointmentRoutes.get('/getAppointments',AppointmentController.getAppointments);
 appointmentRoutes.post('/getAppointmentBookings',AppointmentController.getAppointmentBookings);
 appointmentRoutes.post('/bookAppointment',AppointmentController.bookAppointment);
 // appointmentRoutes.put('/updateAppointment/:id',AppointmentController.updateAppointment);

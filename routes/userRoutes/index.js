@@ -8,6 +8,8 @@ const medicalRoutes = require('./medicalRecords');
 const diagnosticsRoutes = require('./diagnostics.routes');
 const healthCareRoutes = require('./homeCare.routes');
 const ambulanceRoutes = require('./ambulance.routes');
+const chatRoutes = require('./chat.routes');
+
 const userController = require('../../controllers/userControllers/user.controller');
 const jsonwebtoken = require('jsonwebtoken');
 
@@ -27,6 +29,7 @@ userRouter.post('/contactUs',userController.contactUs);
 userRouter.get('/welcomeImage',userController.getWelcomeImage);
 userRouter.get('/getSpotlight',userController.getSpotlight);
 userRouter.use('/ambulance',ambulanceRoutes);
+userRouter.use('/chat',chatRoutes);
 
 function patientAuth(req,res,next){
     try {

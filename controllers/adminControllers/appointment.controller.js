@@ -1,23 +1,24 @@
 const appointmentBookings = require('../../models/appointmentBookings');
-const healthConcernModel = require('../../models/healthConcern.model');
+const { Appointment,HealthConcern } = require('../../models');
+const { AppointmentService } = require('../../services');
 
-// module.exports.getAppointments = async (req,res)=>{
-//     try {
-//         const {select,project,limit,skip} = req.body;
-//         const appointments = await appointmentModel.find(select,project).limit(limit??20).skip(skip??0);
-//         res.status(200).json({
-//             status:200,
-//             message:'Appointments fetched Successfully',
-//             data:appointments
-//         });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({
-//             status:500,
-//             message:error.message,
-//         });
-//     }
-// }
+module.exports.getAppointments = async (req,res)=>{
+    try {
+        const {limit,page} = req.query;
+        const appointments = await AppointmentService.getAppointments(page,limit);
+        res.status(200).json({
+            status:200,
+            message:'Appointments fetched Successfully',
+            data:appointments
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:error.message,
+        });
+    }
+}
 
 module.exports.getAppointmentBookings = async (req,res)=>{
     try {

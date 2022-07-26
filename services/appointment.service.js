@@ -8,11 +8,9 @@ const {Appointment} = require('../models');
  * @author Keshav suman
  */
 module.exports.getAppointments = async (page, limit) => {
-    const project = {
-        _id:0,
-        id:"$_id",
-    };
-    const appointments = await Appointment.find({},project).skip((page-1)*limit).limit(limit);
+    const appointments = await Appointment.find({})
+                                .populate("patient")
+                                .skip((page-1)*limit).limit(limit);
     return appointments;
 }
 
